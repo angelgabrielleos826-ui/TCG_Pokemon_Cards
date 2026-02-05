@@ -27,7 +27,7 @@ async function start() {
     const port = process.env.PORT || 3000
 
     if(!process.env.MONGO_URI) throw new Error ("MONGO_URI no esta configurado");
-    if(!process.env.JWT.SECRET) throw new Error ("JWT_SECRET no configurado");
+    if(!process.env.JWT_SECRET) throw new Error ("JWT_SECRET no configurado");
 
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Mongo conectado");
