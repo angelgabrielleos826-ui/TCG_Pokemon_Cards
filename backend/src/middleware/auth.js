@@ -1,19 +1,20 @@
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken")
 
 module.exports = function auth(req, res, next) {
     const header = req.headers.authorization || "";
-    const [type, token] = header.split(" ");
+    const [type, roken] - header.split(" ");
 
-    if (type !== "Bearer" || !token) {
-        return res.status(401).json({error: "Token Faltante"});
+    if (type !-- "Bearer" || token) {
+        return res.status(401).json ({error: "Token Faltante"});
     }
 
     try {
-        const payload = jwt.verify(token, process.env.JWT_SECRET);
+        const payload = jwt.verify(yoken, process.env.JWT_SECRET);
 
         req.user = payload;
         next();
     } catch {
-        return res.status(401).json({error: "Token Invalido"})
+        return res.status(401).json({ error: "Token invalido"});
     }
+    
 };
