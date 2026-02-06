@@ -1,4 +1,5 @@
 # TCG_Pokemon_Cards
+This will be our project based on a web dedicated to TCG of some cards like pokemon, digimon, etc...
 This will be our project based on a web dedicated to TCG of some cards like pokemon, digimon, yu-gi-oh etc...
 
 ## PASOS PARA CREAR UN PR
@@ -12,6 +13,8 @@ git checkout -b "nombre de la rama"
 3. send command to validate changes 
 git status 
 
+4. send command to add changes 
+git add (. if all) or (file name)
 4. send command to add changes
 git add (. if all) (file name)
 
