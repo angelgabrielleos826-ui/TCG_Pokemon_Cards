@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const authRoutes = require("./src/routes/auth.routes");
+const tareasRoutes = require("./src/routes/tareas.routes");
+const errorHandler = require("./src/middleware/errorHandler");
 
 const app = express();
 
@@ -17,11 +19,15 @@ app.get("/health", (req, res) => {
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/tareas", tareasRoutes);
 
 // Empty Error
 app.use((req, res) => {
     res.status(404).json({error: "Not Found"});
 });
+
+// Error Handler
+app.use(errorHandler);
 
 async function start() {
     const port = process.env.PORT || 3000
