@@ -1,5 +1,6 @@
 # TCG_Pokemon_Cards
 This will be our project based on a web dedicated to TCG of some cards like pokemon, digimon, etc...
+This will be our project based on a web dedicated to TCG of some cards like pokemon, digimon, yu-gi-oh etc...
 
 ## PASOS PARA CREAR UN PR
 1. send comman tu uptade my current main branch
@@ -12,8 +13,13 @@ git checkout -b "nombre de la rama"
 3. send command to validate changes 
 git status 
 
-4. send command to validate changes 
+4. send command to add changes 
+git add (. if all) or (file name)
+4. send command to add changes
+git add (. if all) (file name)
+
+5. send command to validate changes 
 git commit -m "Message"
 
-5. send command to push changes into remote repo
+6. send command to push changes into remote repo
 git push "branch upward name"
