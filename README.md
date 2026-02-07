@@ -22,8 +22,6 @@ git status
 
 4. send command to add changes 
 git add (. if all) or (file name)
-4. send command to add changes
-git add (. if all) (file name)
 
 5. send command to validate changes 
 git commit -m "Message"
