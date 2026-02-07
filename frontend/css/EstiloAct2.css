@@ -10,7 +10,7 @@ body {
     min-height: 100vh;
 
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url('/frontend/resources/fondo2.png');
+                url('../resources/fondo2.png');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
