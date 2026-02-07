@@ -1,5 +1,5 @@
-const express = require("express");
-const cors= require("cors");
+const express = require("express")
+const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
@@ -12,9 +12,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//health check 
+//Health check
 app.get("/health", (req, res) => {
-    res.json({ ok: true, ts: new Date().toISOString});
+    res.json({ok: true, ts: new Date().toISOString() });
 });
 
 //Routes
@@ -24,9 +24,12 @@ app.use("/api/tareas", tareasRoutes);
 
 
 //Empty Error
-app.use((req, res) =>{
-    res.status(404).json({ error: "Not found "});
-});
+app.use((req, res) => {
+   res.status(404).json({ error: "Not Found"});
+})
+
+// Error Handler
+app.use(errorHandler);
 
 //Error Handelr
 app.use(errorHandler);
@@ -36,17 +39,16 @@ async function start() {
     const port = process.env.PORT || 3000
 
     if (!process.env.MONGO_URI) throw new Error ("MONGO_URI no esta configurado");
-    if (!process.env.JWT_SECRET) throw new Error ("JWT_SECREST no configurado");
+    if (!process.env.JWT_SECRET) throw new Error ("JWT_SECRET no configurado");
 
     await mongoose.connect(process.env.MONGO_URI);
     console.log("Mongo conectado");
 
-    app.listen(port, ()=> console.log(`API exitosamente ejecutada http://localhost:${port}`));
+    app.listen(port, () => console.log(`API exitosamente ejecutada http://localhost:${port}`));
 
-};
+}
 
-start().catch((err)=>{
+start().catch((err) => {
     console.error("Error al iniciar", err.message);
     process.exit(1);
 });
-
