@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>TCG Manager - Pokemon</title>
+    <link rel="stylesheet" href="/frontend/css/EstiloPokemon.css">
+</head>
+<body>
+
+<header>
+    <li class="volver-li"><a href="/index.html" class="btn-volver">Volver</a></li>
+    <h1>Mi Colección Pokemon </h1>
+</header>
+
+<main class="galeria">
+    <div class="cartas"><!-- Agregue el data-nombre para que saliera el nombre de la carta en el carrito -->
+        <div class="carta" data-nombre="Oddish"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_1.png"></div>
+        <div class="carta" data-nombre="Gloom"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_2.png"></div>
+        <div class="carta" data-nombre="Vileplume"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_3.png"></div>
+        <div class="carta" data-nombre="Mega-Heracross EX"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_4.png"></div>
+        <div class="carta" data-nombre="Lotad"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_5.png"></div>
+        <div class="carta" data-nombre="Lombre"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_6.png"></div>
+        <div class="carta" data-nombre="Ludicolo"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_7.png"></div>
+        <div class="carta" data-nombre="Genesect"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_8.png"></div>
+        <div class="carta" data-nombre="Nymble"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_9.png"></div>
+        <div class="carta" data-nombre="Lokix"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_10.png"></div>
+        <div class="carta" data-nombre="Charmander"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_11.png"></div>
+        <div class="carta" data-nombre="Charmeleon"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_12.png"></div>
+        <div class="carta" data-nombre="Mega-Charizard X EX"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_13.png"></div>
+        <div class="carta" data-nombre="Moltres"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_14.png"></div>
+        <div class="carta" data-nombre="Darumaka"><img src="https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_15.png"></div>
+    </div>
+</main>
+<!-- AGREGUE:Botón flotante -->
+<button id="btn-agregar-carrito" class="oculto">🛒 Agregar al carrito</button>
+
+<!-- Carrito -->
+<div id="carrito">
+  <h2>Mi Carrito</h2>
+  <ul id="lista-carrito"></ul>
+</div>
+
+<!-- Script -->
+<script src="/frontend/js/app.js"></script>
+</body>
+</html>
