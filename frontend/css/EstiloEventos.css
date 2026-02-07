@@ -1,0 +1,341 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('/frontend/resources/fondo6.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitulo {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+.contenedor-eventos {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.evento {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-wrap: wrap;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.evento:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.evento-imagen {
+    flex: 1;
+    min-width: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.evento-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.evento:hover .evento-imagen img {
+    transform: scale(1.1);
+}
+
+.etiqueta {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #ff6b6b;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.85em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.evento-activo {
+    background: #51cf66;
+}
+
+.evento-finalizado {
+    background: #868e96;
+}
+
+.evento-info {
+    flex: 2;
+    min-width: 300px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.evento-info h2 {
+    color: #2a5298;
+    font-size: 1.8em;
+    margin-bottom: 10px;
+}
+
+.detalles {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.detalles p {
+    margin: 8px 0;
+    font-size: 0.95em;
+}
+
+.descripcion {
+    line-height: 1.6;
+    color: #555;
+}
+
+.btn-registro {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    align-self: flex-start;
+}
+
+.btn-registro:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.btn-registro:disabled {
+    background: #adb5bd;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.btn-registro:disabled:hover {
+    transform: none;
+}
+
+footer {
+    background: #1e3c72;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 40px;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* MODAL (REGISTRO) */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+
+    /* Centrado del modal*/
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenido {
+    background: white;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: 5% auto;
+    padding: 25px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.cerrar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.modal h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.modal input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.fecha {
+    display: flex;
+    gap: 10px;
+}
+
+/* RECIBO DESCARGABLE */
+
+.recibo p {
+    margin: 8px 0;
+    font-size: 15px;
+}
+
+.recibo h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Boton para volver (Home) */
+
+.volver-li{
+    list-style: none;
+}
+
+.btn-volver{
+    display: flex;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 22px 40px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    justify-content: flex-start;
+    align-items: flex-start;    
+    height: 10vh;
+    position: absolute; left: 15px;
+}
+
+@media (max-width: 768px) {
+    .evento {
+        flex-direction: column;
+    }
+    
+    .evento-imagen {
+        min-height: 250px;
+    }
+    
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    .modal input,
+    .modal button {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .modal-contenido {
+        width: 95%;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .modal h2 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .fecha {
+        flex-direction: column;
+    }
+}
+
+@media print {
+
+    /* Ocultar todo */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Mostrar SOLO el recibo */
+    #modalRecibo, 
+    #modalRecibo * {
+        visibility: visible;
+    }
+
+    /* Eliminar overlay y centrar */
+    #modalRecibo {
+        position: absolute;
+        inset: 0;
+        background: none !important;
+        display: block;
+        height: auto;
+    }
+
+    /* Ajustar tamaño del recibo */
+    .modal-contenido.recibo {
+        margin: 0 auto;
+        box-shadow: none;
+        width: 100%;
+        max-width: 600px;
+        page-break-inside: avoid;
+    }
+
+    /* Quitar botones innecesarios */
+    .btn-confirmar,
+    .cerrar-recibo {
+        display: none;
+    }
+}
+
+@page {
+    size: A4;
+    margin: 20mm;
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>TCG Manager - Digimon</title>
+    <link rel="stylesheet" href="/frontend/css/EstiloDigimon.css">
+</head>
+<body>
+
+<header>
+    <li class="volver-li"><a href="/index.html" class="btn-volver">Volver</a></li>
+    <h1>Mi Colección Digimon</h1>
+</header>
+
+<main class="galeria">
+    <div class="cartas"> <!-- Agregue el data-nombre para que saliera el nombre de la carta en el carrito -->
+        <div class="carta" data-nombre="Yokomon"><img src="https://images.digimoncard.io/images/cards/BT1-001.jpg"></div>
+        <div class="carta" data-nombre="DarkTyrannomon"><img src="https://images.digimoncard.io/images/cards/BT1-019.jpg"></div>
+        <div class="carta" data-nombre="WaeGreymon"><img src="https://images.digimoncard.io/images/cards/BT1-025.jpg"></div>
+        <div class="carta" data-nombre="Gabumon"><img src="https://images.digimoncard.io/images/cards/BT1-029.jpg"></div>
+        <div class="carta" data-nombre="Gorillamon"><img src="https://images.digimoncard.io/images/cards/BT1-037.jpg"></div>
+        <div class="carta" data-nombre="Zudomon"><img src="https://images.digimoncard.io/images/cards/BT1-041.jpg"></div>
+        <div class="carta" data-nombre="MagnaAngemon"><img src="https://images.digimoncard.io/images/cards/BT1-060.jpg"></div>
+        <div class="carta" data-nombre="Togemon"><img src="https://images.digimoncard.io/images/cards/BT1-074.jpg"></div>
+        <div class="carta" data-nombre="Omnimon"><img src="https://images.digimoncard.io/images/cards/BT1-084.jpg"></div>
+        <div class="carta" data-nombre="Gigimon"><img src="https://images.digimoncard.io/images/cards/BT2-001.jpg"></div>
+        <div class="carta" data-nombre="Lavogaritamon"><img src="https://images.digimoncard.io/images/cards/BT2-016.jpg"></div>
+        <div class="carta" data-nombe="UlforceVeedramon"><img src="https://images.digimoncard.io/images/cards/BT2-032.jpg"></div>
+        <div class="carta" data-nombre="Zubamon"><img src="https://images.digimoncard.io/images/cards/BT3-008.jpg"></div>
+        <div class="carta" data-nombre="RagnaLoardmon"><img src="https://images.digimoncard.io/images/cards/BT3-019.jpg"></div>
+        <div class="carta" data-nombre="Hell's Gate"><img src="https://images.digimoncard.io/images/cards/BT4-112.jpg"></div>
+    </div>
+</main>
+<!-- Botón flotante -->
+<button id="btn-agregar-carrito" class="oculto">🛒 Agregar al carrito</button>
+
+<!-- Carrito -->
+<div id="carrito">
+  <h2>Mi Carrito</h2>
+  <ul id="lista-carrito"></ul>
+</div>
+
+<!-- Script -->
+<script src="/frontend/js/app.js"></script>
+
+</body>
+</html>
