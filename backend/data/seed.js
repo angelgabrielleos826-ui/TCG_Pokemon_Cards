@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Card = require("./models/Card");
+const Card = require("../src/models/Card");
 
 mongoose.connect("mongodb://127.0.0.1/tcg_pokemon_cards");
 
