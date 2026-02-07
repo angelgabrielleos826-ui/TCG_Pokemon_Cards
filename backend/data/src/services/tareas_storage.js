@@ -1,7 +1,7 @@
 const fs = require("fs/promises")
 const path = require("path")
 
-const filePath = path.join(_dirname, "..", "..", "data", "tareas.json")
+const filePath = path.join(__dirname, "..", "..", "data", "tareas.json")
 
 async function readAll(){
     const raw = await fs.readFile(filePath, "utf-8");
