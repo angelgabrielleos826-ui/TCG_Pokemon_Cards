@@ -52,10 +52,15 @@ router.post(
         const index = cart.items.findIndex(
             item => item.card.toString() === cardId
         );
-
-        if (index >= 0) {
-            cart.items[index].quantity += quantity || 1;
-        } else {
+//no encontramos la manera asi que utilice ayuda de IA 
+if (index >= 0) {
+    cart.items[index].quantity += quantity || 1;
+    
+    // Si la cantidad llega a 0 o menos, eliminar el item
+    if (cart.items[index].quantity <= 0) {
+        cart.items.splice(index, 1); // hasta aqui use IA
+    }
+} else {
             cart.items.push({
                 card: cardId,
                 quantity: quantity || 1
