@@ -2,9 +2,9 @@ const jwt = require("jsonwebtoken")
 
 module.exports = function auth(req, res, next) {
     const header = req.headers.authorization || "";
-    const [type, token] = header.split("");
+    const [type, token] = header.split(" ");
 
-    if (type !== "Bears" || !token){
+    if (type !== "Bearer" || !token){
         return res.status(401).json({ error: "Token faltante"});
     }
 

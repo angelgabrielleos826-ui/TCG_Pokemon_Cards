@@ -14,4 +14,4 @@ async function writeAll(tareas) {
     await fs.writeFile(filePath, JSON.stringify(tareas, null, 2), "utf-8");
 }
 
-module.exports = {readAll, writeAll };
+module.exports = {readAll, writeAll};

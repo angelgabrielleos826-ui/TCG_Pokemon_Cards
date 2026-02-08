@@ -3,9 +3,11 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-const authRoutes = require("./data/src/routes/auth.routes");
-const tareasRoutes = require("./data/src/routes/tareas.routes");
-const errorHandler = require("./data/src/middleware/error_handler");
+const authRoutes = require("./src/routes/auth.routes");
+const tareasRoutes = require("./src/routes/tareas.routes");
+const errorHandler = require("./src/middleware/errorHandler");
+const cartRoutes = require("./src/routes/cart.routes");
+const cardRoutes = require("./src/routes/cards.routes");
 
 const app = express();
 
@@ -20,8 +22,8 @@ app.get("/health", (req, res) => {
 //Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/tareas", tareasRoutes);
-
-
+app.use("/api/cart", cartRoutes);
+app.use("/api/cards", cardRoutes);
 
 //Empty Error
 app.use((req, res) => {
@@ -30,10 +32,6 @@ app.use((req, res) => {
 
 // Error Handler
 app.use(errorHandler);
-
-//Error Handelr
-app.use(errorHandler);
-
 
 async function start() {
     const port = process.env.PORT || 3000

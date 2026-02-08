@@ -47,7 +47,7 @@ router.post("/login", async (req, res) => {
         {expiresIn: "2h"}
     );
 
-    return res.status(201).json({ jwt_token: token});
+    return res.status(201).json({jwt_token: token});
 });
 
 module.exports = router;
