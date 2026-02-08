@@ -25,6 +25,7 @@ app.use("/api/tareas", tareasRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/cards", cardRoutes);
 
+
 //Empty Error
 app.use((req, res) => {
    res.status(404).json({ error: "Not Found"});

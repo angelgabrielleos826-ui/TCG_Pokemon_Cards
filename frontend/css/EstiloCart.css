@@ -1,72 +1,190 @@
+/* ===== RESET GENERAL ===== */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background: #0e0e0e;
-    color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+              url('../resources/fondo2.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #fff;
+  min-height: 100vh;
 }
 
+/* ===== ENCABEZADO ===== */
 h1 {
-    text-align: center;
-    padding: 20px;
-    background: black;
+  text-align: center;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: white;
+  padding: 25px 10px;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
 }
 
-/* Layout */
+/* ===== CONTENEDOR PRINCIPAL ===== */
 .contenedor {
-    display: flex;
-    padding: 30px;
-    gap: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px 20px;
 }
 
-/* Productos */
+/* ===== SECCIÓN DE PRODUCTOS ===== */
 .productos {
-    flex: 3;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
+  flex: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
 }
 
-/* Carta */
+/* ===== TARJETA DE CARTA ===== */
 .card {
-    background: #1a1a1a;
-    padding: 10px;
-    border-radius: 10px;
-    text-align: center;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 15px;
+  padding: 15px;
+  width: 200px;
+  text-align: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(102, 126, 234, 0.35);
 }
 
 .card img {
-    width: 120px;
-    height: 170px;
-    object-fit: contain;
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
 }
 
-button {
-    margin-top: 10px;
-    padding: 6px 10px;
-    cursor: pointer;
+.card p {
+  margin: 5px 0;
+  color: #e0e0e0;
+  font-weight: 500;
 }
 
-/* Carrito */
+/* ===== BOTÓN AGREGAR ===== */
+.card button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
+}
+
+.card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(102, 126, 234, 0.6);
+  background: linear-gradient(135deg, #5b6fe0 0%, #6e41b2 100%);
+}
+
+/* ===== PANEL DEL CARRITO ===== */
 .carrito {
-    flex: 1;
-    background: #1a1a1a;
-    padding: 20px;
-    border-radius: 10px;
-    min-width: 220px;
+  flex: 1;
+  min-width: 300px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  position: sticky;
+  top: 30px;
 }
 
-.carrito ul {
-    list-style: none;
-    margin: 10px 0;
+.carrito h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #a5b4fc;
+  font-size: 1.5rem;
+}
+
+#listaCarrito {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#listaCarrito li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 0;
+}
+
+#listaCarrito li button {
+  background: linear-gradient(135deg, #e53935 0%, #c62828 100%);
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#listaCarrito li button:hover {
+  background: linear-gradient(135deg, #ff5b5b 0%, #d32f2f 100%);
 }
 
 .total {
-    margin-top: 15px;
-    font-weight: bold;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: right;
+  color: #ffffff;
+  margin-top: 15px;
+}
+
+/* ===== BOTÓN VACIAR ===== */
+.carrito button {
+  background: linear-gradient(135deg, #ff9800 0%, #fb8c00 100%);
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 10px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(255, 152, 0, 0.4);
+}
+
+.carrito button:hover {
+  background: linear-gradient(135deg, #ffb74d 0%, #ff9800 100%);
+  transform: translateY(-2px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 950px) {
+  .contenedor {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .carrito {
+    width: 90%;
+    position: static;
+    margin-top: 30px;
+  }
 }
