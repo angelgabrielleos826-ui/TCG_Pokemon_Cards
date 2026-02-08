@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-const Card = require("../src/models/Card");
+const Card = require("./src/models/Card");
 
-mongoose.connect("mongodb://127.0.0.1/tcg_pokemon_cards");
+mongoose.connect("mongodb://127.0.0.1/TCG_Pokemon_Cards");
 
 async function seed() {
   const cards = [
