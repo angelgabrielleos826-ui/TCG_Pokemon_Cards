@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                url('../resources/pokemonfondo2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: flex-end; /* cuadro a la derecha */
+    align-items: center;
+    padding-right: 50px; /* separación del borde derecho */
+}
+
+/* Contenedor del registro */
+.register-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px 50px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 350px;
+    text-align: left; /* los labels e inputs alineados a la izquierda */
+}
+
+/* Título */
+.register-container h1 {
+    font-size: 2em;
+    color: #764ba2; /* diferente al azul del login pero suave */
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+/* Labels e inputs */
+.register-container label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: #333;
+}
+
+.register-container input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    font-size: 1em;
+    outline: none;
+}
+
+.register-container input:focus {
+    border-color: #764ba2;
+    box-shadow: 0 0 8px rgba(118, 75, 162, 0.4);
+}
+
+/* Botón */
+.register-container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.register-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+/* Link a login */
+.register-container p {
+    margin-t
