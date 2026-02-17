@@ -1,48 +1,13 @@
-const express = require("express")
-const cors = require("cors");
-const mongoose = require("mongoose");
 require("dotenv").config();
-
-const authRoutes = require("./src/routes/auth.routes");
-const tareasRoutes = require("./src/routes/tareas.routes");
-const errorHandler = require("./src/middleware/errorHandler");
-const cartRoutes = require("./src/routes/cart.routes");
-const cardRoutes = require("./src/routes/cards.routes");
-
-const app = express();
-
-app.use(cors());
-app.use(express.json());
-
-//Health check
-app.get("/health", (req, res) => {
-    res.json({ok: true, ts: new Date().toISOString() });
-});
-
-//Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/tareas", tareasRoutes);
-app.use("/api/cart", cartRoutes);
-app.use("/api/cards", cardRoutes);
-
-
-//Empty Error
-app.use((req, res) => {
-   res.status(404).json({ error: "Not Found"});
-})
-
-// Error Handler
-app.use(errorHandler);
+const app = require ("./src/app");
+const { connectDB } = require("./src/config/db")
 
 async function start() {
     const port = process.env.PORT || 3000
-
-    if (!process.env.MONGO_URI) throw new Error ("MONGO_URI no esta configurado");
-    if (!process.env.JWT_SECRET) throw new Error ("JWT_SECRET no configurado");
-
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("Mongo conectado");
-
+    if (!process.env.JWT_SECRET) throw new Error ("JWT_SECRET no corresponde");
+    
+    await connectDB();
+    
     app.listen(port, () => console.log(`API exitosamente ejecutada http://localhost:${port}`));
 
 }
