@@ -15,7 +15,7 @@ app.use(cookieParser());
 
 //Routes
 app.use("/api/auth", authRoutes);
-
+app.use("/api/user", userRoutes)
 // Error Handler
 app.use(errorHandler);
 
