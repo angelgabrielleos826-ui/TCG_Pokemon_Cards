@@ -1,15 +1,17 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const User = require("../models/User")
+const Session = require("../models/Session")
 
 function cookieOptions () {
     return {
-        hhtpOnly: true,
+        httpOnly: true,
         secure: false,
         sameSite: "lax",
         path: "/"  
     }
 }
+
 // CRUD = Create Reade Update Delete
 async function register (req, res, next) { 
     const {email, password} = req.body;
@@ -53,14 +55,49 @@ async function login (req, res)  {
     const ok = await bcrypt.compare(password, user.passwordHash);
     if(!ok) return res.status(401).json({error: "credenciales invalidas"});
     
+    const expiredMinutes = 10;
+    const expiresAt = new(Date(Date.now()+expiredMinutes* 60 * 1000));
+    
+    const sesion =await sessionStorage.create(
+        {
+            useId: user._id,
+            expiresAt
+        }
+    );
+
     const token = jwt.sign(
-        { sub: String(user._id), email: user.email},
+        {
+            sub: String(user._id),
+            email: user.email,
+            role: user.role,
+            sid:String(Session._id)
+        },
         process.env.JWT_SECRET,
-        {expiresIn: "2h"}
+        { expiresIn: `${expMinutes}m` }
     );
 
     //return res.status(201).json({jwt_token: token});
-    res.cookie("access_token", token, cookieOptions()).json ({ ok:true});
+    res
+    .cookie("access_token", token, cookieOptions())
+    .cookie("session_id", String(sesion._id), cookieOptions())
+    .json ({ ok:true});
 };
 
-module.exports = { register, login };
+async function logout(req, res, next) {
+    const sessionId = req.cookies?.sesiom_id;
+    if(session) {
+        await Session.findByIdAndUpdate(sessionId,{ revokedAt: new Date() });
+    }
+
+    res
+    .clearCookie("acces_token", cookieOpcions())
+    .clearCookie("sesion_id", cookieOpcions())
+    .json({ ok: true});
+}
+async function me (req, res) {
+    res.json(req.user);
+}
+
+
+
+module.exports = { register, login, logout, me };
