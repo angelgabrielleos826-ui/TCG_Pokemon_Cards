@@ -4,9 +4,10 @@ const User = require("../models/User");
 
 async function auth(req, res, next) {
     const token = req.cookies?.access_token;
-    const session_id = req.cookies?.session_id;
+    const sessionId = req.cookies?.sessionId;
     
-    if(!token || !session_id){
+
+    if(!token || !sessionId){
         res.status(401);
         return next(new Error("Error de autenticacion"));
     }
@@ -17,6 +18,13 @@ async function auth(req, res, next) {
     } catch {
         res.status(401);
         return next(new Error("Token expirado o invalido"));
+    }
+
+    // Session validation
+    const session = await Session.findById(sessionId);
+    if(!session || session.revokedAt || session.expiresAt <= new Date ()){
+        res.status(401);
+        return next(new Error("Sesion Invalida"));
     }
 
     const user = await User.findById(payload.sub).select("email role");

@@ -15,7 +15,4 @@ router.post("/logout", auth, logout);
 router.get("/me", auth, me);
 
 
-
-
-
 module.exports = router;

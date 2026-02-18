@@ -14,7 +14,7 @@ function cookieOptions () {
 
 // CRUD = Create Reade Update Delete
 async function register (req, res, next) { 
-    const {email, password} = req.body;
+    const {email, password, role} = req.body;
 
     //validar ambos argumentos
     if (!email || !password) {
@@ -27,7 +27,7 @@ async function register (req, res, next) {
 
     //Registrar ambos parametros, password capa encriptada
     const passwordHash = await bcrypt.hash(password, 10);
-    const user = await User.create ({ email, passwordHash, role: "user"});
+    const user = await User.create ({ email, passwordHash, role: role});
 
     //Respuesta de seguimiento -> OK
     return res.status(201).json(
@@ -56,9 +56,9 @@ async function login (req, res)  {
     if(!ok) return res.status(401).json({error: "credenciales invalidas"});
     
     const expiredMinutes = 10;
-    const expiresAt = new(Date(Date.now()+expiredMinutes* 60 * 1000));
+    const expiresAt = new Date(Date.now()+expiredMinutes* 60 * 1000);
     
-    const sesion =await sessionStorage.create(
+    const sesion =await Sesion.create(
         {
             useId: user._id,
             expiresAt
@@ -73,7 +73,7 @@ async function login (req, res)  {
             sid:String(Session._id)
         },
         process.env.JWT_SECRET,
-        { expiresIn: `${expMinutes}m` }
+        { expiresIn: `${expiredMinutes}m` }
     );
 
     //return res.status(201).json({jwt_token: token});

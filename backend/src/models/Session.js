@@ -13,7 +13,7 @@ const sesionSchema = new mongoose.Schema(
             type: Date,
             default: null
         },
-        expresAt: {
+        expiresAt: {
              type: Date,
             required: true,
             index: true
@@ -25,6 +25,6 @@ const sesionSchema = new mongoose.Schema(
         }
 );
 
-sesionSchema.index({expresAt: 1}, {expireAfterSeconds:0});
+sesionSchema.index({expiresAt: 1}, {expireAfterSeconds:0});
 module.exports = mongoose.model("Session", sesionSchema);
 module.exports = mongoose.model("Session", sesionSchema);
