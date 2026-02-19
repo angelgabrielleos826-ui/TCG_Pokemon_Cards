@@ -7,5 +7,6 @@ module.exports = function errorHandler(err, req, res, next) {
         return res.status(400).json({error: "id invalido"});
     }
 
-    return res.status(500).json({error: "Error interno del servidor"});
+    const status = res.statusCode && res.statusCode !== 200 ? res.statusCode : 500;
+    return res.status(status).json({error: err.message || "Error interno del servidor"});
 };
