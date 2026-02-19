@@ -5,7 +5,8 @@ const cookieParser = require("cookie-parser");
 //Routes
 const authRoutes = require("./routes/auth.routes");
 const errorHandler = require("./middleware/errorHandler");
-
+const productRoutes = require("./routes/product.routes");
+const userRoutes = require("./routes/user.routes");
 
 const app = express();
 
@@ -15,7 +16,8 @@ app.use(cookieParser());
 
 //Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/user", userRoutes)
+app.use("/api/user", userRoutes);
+app.use("/api/products", productRoutes);
 // Error Handler
 app.use(errorHandler);
 

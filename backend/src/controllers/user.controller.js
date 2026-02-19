@@ -1,6 +1,7 @@
 const User = require("../models/User");
-const Session = require("../models/Sessions");
+const Session = require("../models/Session");
 
+// DELETE /api/:id
 async function deleteUser(req, res, next) {
     const { id } = req.params;
 
@@ -14,4 +15,4 @@ async function deleteUser(req, res, next) {
     await User.deleteOne({_id: user._id });
     res.json({ ok: true});
 }
-module.exports = { delateuser };
+module.exports = { deleteUser };
