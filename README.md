@@ -14,7 +14,7 @@ This will be our project based on a web dedicated to TCG of some cards like poke
 git fetch 
 git pull
 
-2. Send command to create and change to new branch 
+2. Send command to create and change to new branch
 git checkout -b "nombre de la rama"
 
 3. send command to validate changes 

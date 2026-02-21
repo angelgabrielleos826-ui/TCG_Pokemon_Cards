@@ -2,6 +2,7 @@
     const Card = require("../models/Card");
 
     const router = express.Router();
+    const { getCards } = require("../controllers/card.controller");//agregue getCards
 
     // Ver todas las cartas
     router.get(

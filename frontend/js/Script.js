@@ -1,6 +1,4 @@
 const contenedor = document.getElementById("productos");
-const listaCarrito = document.getElementById("listaCarrito");
-const total = document.getElementById("total");
 
 let carrito = [];
 

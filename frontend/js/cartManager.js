@@ -11,7 +11,7 @@ function verificarAutenticacion() {
   const token = getToken();
   if (!token) {
     alert("Debes iniciar sesión para usar el carrito");
-    window.location.href = "/login.html";
+    window.location.href = "../html/login.html";
     return false;
   }
   return true;

@@ -1,7 +1,7 @@
 // cartPage.js - Lógica para la página Cart.html
 
-let carritoActual = null;
-let totalActual = 0;
+var carritoActual = null;
+var totalActual = 0;
 
 // Elementos del DOM
 const listaCarrito = document.getElementById("listaCarrito");
