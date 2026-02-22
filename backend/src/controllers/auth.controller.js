@@ -58,9 +58,9 @@ async function login (req, res)  {
     const expiredMinutes = 10;
     const expiresAt = new Date(Date.now()+expiredMinutes* 60 * 1000);
     
-    const sesion =await Sesion.create(
+    const session =await Session.create(
         {
-            useId: user._id,
+            userId: user._id,
             expiresAt
         }
     );
@@ -70,28 +70,28 @@ async function login (req, res)  {
             sub: String(user._id),
             email: user.email,
             role: user.role,
-            sid:String(Session._id)
+            sid:String(session._id)
         },
         process.env.JWT_SECRET,
         { expiresIn: `${expiredMinutes}m` }
     );
 
     //return res.status(201).json({jwt_token: token});
-    res
-    .cookie("access_token", token, cookieOptions())
-    .cookie("session_id", String(sesion._id), cookieOptions())
-    .json ({ ok:true});
+   res
+   .cookie("access_token", token, cookieOptions())
+   .cookie("session_id", String(session._id), cookieOptions())
+   .json({ ok: true, jwt_token: token });// agregue eso para que regrese el token en el body
 };
 
 async function logout(req, res, next) {
-    const sessionId = req.cookies?.sesiom_id;
+    const sessionId = req.cookies?.session_id;
     if(session) {
         await Session.findByIdAndUpdate(sessionId,{ revokedAt: new Date() });
     }
 
     res
-    .clearCookie("acces_token", cookieOpcions())
-    .clearCookie("sesion_id", cookieOpcions())
+    .clearCookie("access_token", cookieOptions())
+    .clearCookie("session_id", cookieOptions())
     .json({ ok: true});
 }
 async function me (req, res) {

@@ -1,12 +1,13 @@
-const express = require("express")
+const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
-//Routes
 const authRoutes = require("./routes/auth.routes");
-const errorHandler = require("./middleware/errorHandler");
-const productRoutes = require("./routes/product.routes");
 const userRoutes = require("./routes/user.routes");
+const cartRoutes = require("./routes/cart.routes");
+const cardsRoutes = require("./routes/cards.routes");
+const orderRoutes = require("./routes/order.routes");
+const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
@@ -14,22 +15,16 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
-//Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/products", productRoutes);
-// Error Handler
+app.use("/api/cards", cardsRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
+
 app.use(errorHandler);
 
-//Health check
 app.get("/health", (req, res) => {
-    res.json (
-        {
-            ok: true,
-            ts: new Date().toISOString()
-        }
-    );
+    res.json({ ok: true, ts: new Date().toISOString() });
 });
-
 
 module.exports = app;

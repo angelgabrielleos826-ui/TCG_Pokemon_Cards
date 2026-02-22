@@ -1,5 +1,5 @@
 const express = require("express");
-const { auth } = require("../middleware/auth");
+const auth  = require("../middleware/auth");//modifique auth
 const { requireRole } = require("../middleware/requireRole");
 const { deleteUser } = require("../controllers/user.controller");
 

@@ -1,0 +1,136 @@
+// checkout.js - Lógica del modal de pago
+const API_URL_ORDERS = "http://localhost:3000/api";
+
+function abrirModalPago() {
+    const totalVisible = document.getElementById("total").textContent;
+    
+    if (!totalVisible || totalVisible === "0") {
+        alert("Tu carrito está vacío. Agrega cartas antes de pagar.");
+        return;
+    }
+
+    document.getElementById("totalModal").textContent = totalVisible;
+    document.getElementById("formPago").style.display = "block";
+    document.getElementById("mensajeExito").classList.remove("activo");
+    document.getElementById("errorMsg").classList.remove("activo");
+    document.getElementById("modalPago").classList.add("activo");
+}
+
+function cerrarModalPago() {
+    document.getElementById("modalPago").classList.remove("activo");
+    limpiarFormulario();
+}
+
+function limpiarFormulario() {
+    const campos = ["fullName","phone","address","city","zip",
+        "cardHolder","cardNumber","cardExpiry","cardCVV"];
+
+    campos.forEach(id => document.getElementById(id).value = "");
+    document.getElementById("cardType").value = "";
+    document.getElementById("errorMsg").classList.remove("activo");
+}
+
+function validarFormulario() {
+    const campos = ["fullName","phone","address","city","zip",
+                    "cardType","cardHolder","cardNumber","cardExpiry","cardCVV"];
+    for (const campo of campos) {
+        if (!document.getElementById(campo).value.trim()) return false;
+    }
+    return true;
+}
+
+async function confirmarCompra() {
+    if (!validarFormulario()) {
+        document.getElementById("errorMsg").classList.add("activo");
+        return;
+    }
+
+    const btnConfirmar = document.getElementById("btnConfirmar");
+    btnConfirmar.disabled = true;
+    btnConfirmar.textContent = "Procesando...";
+
+    const shippingInfo = {
+        fullName: document.getElementById("fullName").value.trim(),
+        phone:    document.getElementById("phone").value.trim(),
+        address:  document.getElementById("address").value.trim(),
+        city:     document.getElementById("city").value.trim(),
+        zip:      document.getElementById("zip").value.trim()
+    };
+
+    const cardInfo = {
+        cardType:   document.getElementById("cardType").value,
+        cardHolder: document.getElementById("cardHolder").value.trim(),
+        cardNumber: document.getElementById("cardNumber").value.replace(/\s/g, "")
+    };
+
+    // ✅ CAMBIO: obtener total visible en pantalla // Fue con IA este cambio por un error 
+    const total = parseFloat(document.getElementById("total").textContent);
+
+    const token = localStorage.getItem("jwt_token");
+
+    try {
+        const response = await fetch(`${API_URL_ORDERS}/orders/checkout`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            // ✅ CAMBIO: mandamos total en el body // fue con IA este cambio por un error
+            body: JSON.stringify({ 
+                shippingInfo, 
+                cardInfo,
+                total
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || "Error al procesar la compra");
+        }
+
+        // Éxito
+        document.getElementById("formPago").style.display = "none";
+        document.getElementById("mensajeExito").classList.add("activo");
+
+        setTimeout(() => cerrarModalPago(), 3000);
+
+    } catch (error) {
+        console.error("Error en checkout:", error);
+        const errorMsg = document.getElementById("errorMsg");
+        errorMsg.textContent = `${error.message}`;
+        errorMsg.classList.add("activo");
+        btnConfirmar.disabled = false;
+        btnConfirmar.textContent = "Confirmar Compra";
+    }
+}
+
+// Formateo automático del número de tarjeta       //aqui tmb utilice IA ya que no sabia como hacer esta parte 108-115
+document.addEventListener("DOMContentLoaded", () => {
+    const inputNumero = document.getElementById("cardNumber");
+    if (inputNumero) {
+        inputNumero.addEventListener("input", (e) => {
+            let valor = e.target.value.replace(/\D/g, "");
+            valor = valor.match(/.{1,4}/g)?.join(" ") || valor;
+            e.target.value = valor;
+        });
+    }
+
+    const inputExpiry = document.getElementById("cardExpiry");
+    if (inputExpiry) {
+        inputExpiry.addEventListener("input", (e) => {
+            let valor = e.target.value.replace(/\D/g, "");
+            if (valor.length >= 3) {
+                valor = valor.slice(0, 2) + "/" + valor.slice(2, 4);
+            }
+            e.target.value = valor;
+        });
+    }
+
+    const overlay = document.getElementById("modalPago");
+    if (overlay) {
+        overlay.addEventListener("click", (e) => {
+            if (e.target === overlay) cerrarModalPago();
+        });
+    }
+});

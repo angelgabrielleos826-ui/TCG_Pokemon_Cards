@@ -3,11 +3,11 @@ const Session = require("../models/Session");
 const User = require("../models/User");
 
 async function auth(req, res, next) {
-    const token = req.cookies?.access_token;
-    const sessionId = req.cookies?.sessionId;
-    
+    const token = req.cookies?.access_token || 
+                  req.headers.authorization?.replace("Bearer ", ""); //utilice IA en la linea 7
+    const sessionId = req.cookies?.session_id;
 
-    if(!token || !sessionId){
+    if(!token){
         res.status(401);
         return next(new Error("Error de autenticacion"));
     }
@@ -20,11 +20,16 @@ async function auth(req, res, next) {
         return next(new Error("Token expirado o invalido"));
     }
 
-    // Session validation
-    const session = await Session.findById(sessionId);
-    if(!session || session.revokedAt || session.expiresAt <= new Date ()){
-        res.status(401);
-        return next(new Error("Sesion Invalida"));
+    // Session validation solo si hay sessionId     Aqui solo hice un pequeño cambio con IA por un error en la linea 25 y26
+    if(sessionId) {
+        const session = await Session.findById(sessionId);
+        if(!session || session.revokedAt || session.expiresAt <= new Date()){
+            res.status(401);
+            return next(new Error("Sesion Invalida"));
+        }
+        req.session = {
+            id: String(session._id)
+        };
     }
 
     const user = await User.findById(payload.sub).select("email role");
@@ -34,19 +39,16 @@ async function auth(req, res, next) {
     }
 
     req.user = {
+        sub: String(user._id),
         id: String(user._id),
         email: user.email,
         role: user.role
     };
 
-    req.session = {
-        id: String(session._id)
-    };
-
     next();
 }
 
-module.exports = { auth };
+module.exports = auth;
 
 //module.exports = function auth(req, res, next) {
   //  const header = req.headers.authorization || "";
