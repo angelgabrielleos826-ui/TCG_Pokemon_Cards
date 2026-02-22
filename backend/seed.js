@@ -105,6 +105,7 @@ async function seed() {
     },
   ];
 
+  await Card.deleteMany({});
   await Card.insertMany(cards);
 
   console.log("Cartas creadas ");
