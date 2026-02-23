@@ -303,3 +303,26 @@ footer p {
         padding: 15px;
     }
 }
+
+.btn-agregar-carta {
+    position: fixed;
+    bottom: 20px;       
+    right: 20px;        
+    width: 60px;
+    height: 60px;
+    background-color: #ff4081; 
+    color: white;
+    font-size: 36px;
+    text-align: center;
+    line-height: 60px;  
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    z-index: 1000;/
+}
+
+.btn-agregar-carta:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 10px rgba(0,0,0,0.4);
+}
