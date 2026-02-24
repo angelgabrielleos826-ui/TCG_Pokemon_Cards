@@ -417,5 +417,54 @@ h1 {
 }
 
 .error-msg.activo {
-    display: block; 
+    display: block;
+}
+
+/* ===== TICKET DE COMPRA ===== */
+.ticket-container {
+    display: none;
+    margin-top: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    padding: 16px;
+    background: rgba(15, 23, 42, 0.5);
+}
+
+.ticket-container.activo {
+    display: block;
+}
+
+.ticket-container h2 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #f8fafc;
+}
+
+.ticket-container p {
+    margin: 6px 0;
+    color: #cbd5e1;
+    font-size: 0.92rem;
+}
+
+.ticket-list {
+    list-style: none;
+    margin: 12px 0;
+    padding: 0;
+    border-top: 1px dashed rgba(148, 163, 184, 0.4);
+    border-bottom: 1px dashed rgba(148, 163, 184, 0.4);
+}
+
+.ticket-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 0;
+    color: #e2e8f0;
+    font-size: 0.9rem;
+}
+
+.ticket-total {
+    margin-top: 8px;
+    font-size: 1rem;
+    color: #bbf7d0 !important;
 }

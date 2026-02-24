@@ -3,7 +3,7 @@ const API_URL_ORDERS = "http://localhost:3000/api";
 
 function abrirModalPago() {
     const totalVisible = document.getElementById("total").textContent;
-    
+
     if (!totalVisible || totalVisible === "0") {
         alert("Tu carrito está vacío. Agrega cartas antes de pagar.");
         return;
@@ -13,6 +13,8 @@ function abrirModalPago() {
     document.getElementById("formPago").style.display = "block";
     document.getElementById("mensajeExito").classList.remove("activo");
     document.getElementById("errorMsg").classList.remove("activo");
+    const ticketContainer = document.getElementById("ticketContainer");
+    if (ticketContainer) ticketContainer.classList.remove("activo");
     document.getElementById("modalPago").classList.add("activo");
 }
 
@@ -22,8 +24,8 @@ function cerrarModalPago() {
 }
 
 function limpiarFormulario() {
-    const campos = ["fullName","phone","address","city","zip",
-        "cardHolder","cardNumber","cardExpiry","cardCVV"];
+    const campos = ["fullName", "phone", "address", "city", "zip",
+        "cardHolder", "cardNumber", "cardExpiry", "cardCVV"];
 
     campos.forEach(id => document.getElementById(id).value = "");
     document.getElementById("cardType").value = "";
@@ -31,12 +33,42 @@ function limpiarFormulario() {
 }
 
 function validarFormulario() {
-    const campos = ["fullName","phone","address","city","zip",
-                    "cardType","cardHolder","cardNumber","cardExpiry","cardCVV"];
+    const campos = ["fullName", "phone", "address", "city", "zip",
+                    "cardType", "cardHolder", "cardNumber", "cardExpiry", "cardCVV"];
     for (const campo of campos) {
         if (!document.getElementById(campo).value.trim()) return false;
     }
     return true;
+}
+
+function formatMoney(value) {
+    const number = Number(value || 0);
+    return number.toFixed(2);
+}
+
+function mostrarTicket(ticket) {
+    const ticketContainer = document.getElementById("ticketContainer");
+    if (!ticketContainer || !ticket) return;
+
+    const fecha = new Date(ticket.fecha || ticket.createdAt || Date.now()).toLocaleString("es-MX");
+
+    const productos = (ticket.productos || []).map((p) => `
+        <li class="ticket-item">
+            <span>${p.nombre} x${p.cantidad}</span>
+            <strong>$${formatMoney(p.subtotal)}</strong>
+        </li>
+    `).join("");
+
+    ticketContainer.innerHTML = `
+        <h2>Ticket de compra</h2>
+        <p><strong>Orden:</strong> ${ticket.numeroOrden}</p>
+        <p><strong>Fecha:</strong> ${fecha}</p>
+        <p><strong>Método de pago:</strong> ${ticket.metodoPago || "Tarjeta"}</p>
+        <ul class="ticket-list">${productos}</ul>
+        <p class="ticket-total"><strong>Total:</strong> $${formatMoney(ticket.total)}</p>
+    `;
+
+    ticketContainer.classList.add("activo");
 }
 
 async function confirmarCompra() {
@@ -51,19 +83,18 @@ async function confirmarCompra() {
 
     const shippingInfo = {
         fullName: document.getElementById("fullName").value.trim(),
-        phone:    document.getElementById("phone").value.trim(),
-        address:  document.getElementById("address").value.trim(),
-        city:     document.getElementById("city").value.trim(),
-        zip:      document.getElementById("zip").value.trim()
+        phone: document.getElementById("phone").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        city: document.getElementById("city").value.trim(),
+        zip: document.getElementById("zip").value.trim()
     };
 
     const cardInfo = {
-        cardType:   document.getElementById("cardType").value,
+        cardType: document.getElementById("cardType").value,
         cardHolder: document.getElementById("cardHolder").value.trim(),
         cardNumber: document.getElementById("cardNumber").value.replace(/\s/g, "")
     };
 
-    // ✅ CAMBIO: obtener total visible en pantalla // Fue con IA este cambio por un error 
     const total = parseFloat(document.getElementById("total").textContent);
 
     const token = localStorage.getItem("jwt_token");
@@ -75,9 +106,8 @@ async function confirmarCompra() {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            // ✅ CAMBIO: mandamos total en el body // fue con IA este cambio por un error
-            body: JSON.stringify({ 
-                shippingInfo, 
+            body: JSON.stringify({
+                shippingInfo,
                 cardInfo,
                 total
             })
@@ -89,12 +119,16 @@ async function confirmarCompra() {
             throw new Error(data.error || "Error al procesar la compra");
         }
 
-        // Éxito
         document.getElementById("formPago").style.display = "none";
         document.getElementById("mensajeExito").classList.add("activo");
+        mostrarTicket(data.ticket);
 
-        setTimeout(() => cerrarModalPago(), 3000);
+        if (typeof cargarCarrito === "function") {
+            await cargarCarrito();
+        }
 
+        btnConfirmar.disabled = false;
+        btnConfirmar.textContent = "Confirmar Compra";
     } catch (error) {
         console.error("Error en checkout:", error);
         const errorMsg = document.getElementById("errorMsg");
@@ -105,7 +139,7 @@ async function confirmarCompra() {
     }
 }
 
-// Formateo automático del número de tarjeta       //aqui tmb utilice IA ya que no sabia como hacer esta parte 108-115
+// Formateo automático del número de tarjeta
 document.addEventListener("DOMContentLoaded", () => {
     const inputNumero = document.getElementById("cardNumber");
     if (inputNumero) {

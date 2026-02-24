@@ -14,11 +14,11 @@
     <section class="productos" id="productos"></section>
 
     <aside class="carrito">
-        <h2>🛒 Carrito</h2>
+        <h2> Carrito</h2>
         <ul id="listaCarrito"></ul>
         <p class="total">Total: $<span id="total">0</span></p>
         <button onclick="vaciarCarrito()">Vaciar carrito</button>
-        <button class="btn-pagar" id="btnPagar" onclick="abrirModalPago()">💳 Pagar</button>
+        <button class="btn-pagar" id="btnPagar" onclick="abrirModalPago()"> Pagar</button>
     </aside>
 
 </div>
@@ -30,7 +30,7 @@
         <button class="modal-close" onclick="cerrarModalPago()">✕</button>
 
         <div id="formPago">
-            <h2>💳 Finalizar Compra</h2>
+            <h2> Finalizar Compra</h2>
 
             <div class="resumen-pago">
                 <span>Total a pagar:</span>
@@ -38,7 +38,7 @@
             </div>
 
             <div class="form-seccion">
-                <h3>📦 Datos de Envío</h3>
+                <h3> Datos de Envío</h3>
                 <div class="form-grupo">
                     <div class="campo">
                         <label>Nombre completo</label>
@@ -66,7 +66,7 @@
             </div>
 
             <div class="form-seccion">
-                <h3>💳 Datos de Tarjeta</h3>
+                <h3> Datos de Tarjeta</h3>
                 <div class="form-grupo">
                     <div class="campo">
                         <label>Tipo de tarjeta</label>
@@ -98,7 +98,7 @@
                 </div>
             </div>
 
-            <p class="error-msg" id="errorMsg">⚠️ Por favor llena todos los campos.</p>
+            <p class="error-msg" id="errorMsg"> Por favor llena todos los campos.</p>
 
             <button class="btn-confirmar" id="btnConfirmar" onclick="confirmarCompra()">
                 Confirmar Compra
@@ -106,10 +106,12 @@
         </div>
 
         <div class="mensaje-exito" id="mensajeExito">
-            <div class="icono">🎉</div>
+            <div class="icono"></div>
             <h3>¡Compra realizada!</h3>
             <p>Tu pedido ha sido registrado correctamente.<br>¡Gracias por tu compra!</p>
         </div>
+
+        <section id="ticketContainer" class="ticket-container"></section>
 
     </div>
 </div>

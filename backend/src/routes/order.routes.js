@@ -2,8 +2,33 @@ const express = require("express")
 const auth = require("../middleware/auth");
 const Cart = require("../models/Cart");
 const Order = require("../models/Order");
+const Ticket = require("../models/Ticket");
 
 const router = express.Router();
+
+function buildTicketFromOrder(order, paymentMethod = "Tarjeta") {
+    const productos = order.items.map((item) => {
+        const precio = item.priceAtPurchase || item.card?.price || 0;
+        const cantidad = item.quantity || 1;
+
+        return {
+            card: item.card?._id || item.card,
+            nombre: item.card?.name || "Producto",
+            precio,
+            cantidad,
+            subtotal: precio * cantidad
+        };
+    });
+
+    return {
+        order: order._id,
+        user: order.user,
+        numeroOrden: `PKM-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+        productos,
+        total: order.total,
+        metodoPago: paymentMethod,
+    };
+}
 
 //POST - FINALIZAR COMPRA
 router.post("/checkout", auth, async(req, res) => {
@@ -20,7 +45,7 @@ router.post("/checkout", auth, async(req, res) => {
 
         const cart = await Cart.findOne({user: req.user.sub}).populate("items.card");
 
-        if (cart && cart.items.length > 0) { //Aqui tambien en esta linea utilice IA pqno sabia como usar el carrito del backend
+        if (cart && cart.items.length > 0) {
             // Usar carrito del backend
             cart.items.forEach(item => {
                 const price = item.card.price;
@@ -31,8 +56,18 @@ router.post("/checkout", auth, async(req, res) => {
                     priceAtPurchase: price
                 });
             });
+        }else if (items && items.length > 0) {
+            orderItems = items.map((item) => ({
+                card: item.card || item.cardId,
+                quantity: item.quantity || 1,
+                priceAtPurchase: item.priceAtPurchase || item.price || 0,
+            }));
+
+            orderTotal = orderItems.reduce(
+                (acc, item) => acc + item.priceAtPurchase * item.quantity,
+                0
+            );
         }else if (total && total > 0) {
-            // ✅ CAMBIO: si no hay carrito, usar solo el total // esto tmb es con IA para resolver un error
             orderTotal = total; 
         } else {
             return res.status(400).json({error: "El carrito esta vacio"});
@@ -52,8 +87,13 @@ router.post("/checkout", auth, async(req, res) => {
             }
         });
 
+        const orderWithCards = await Order.findById(order._id).populate("items.card", "name price image");
+
+        const ticketPayload = buildTicketFromOrder(orderWithCards, cardInfo.cardType || "Tarjeta");
+        const ticket = await Ticket.create(ticketPayload);
+
         await Cart.findOneAndDelete({ user: req.user.sub });
-        res.status(201).json({mensaje: "Compra realizada con exito", order});
+        res.status(201).json({mensaje: "Compra realizada con exito", order: orderWithCards, ticket});
 
     } catch (error) {
         console.error("Error en el checkout:", error);
