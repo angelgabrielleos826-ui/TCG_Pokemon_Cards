@@ -65,7 +65,7 @@ async function getById(req, res, next) {
 async function remove(req, res, next) {
     const { id } = req.params;
 
-    const registration = await EventRegistration.findOneAndDelete(id);
+    const registration = await EventRegistration.findByIdAndDelete(id);
 
     if (!registration) {
         res.status(404);
