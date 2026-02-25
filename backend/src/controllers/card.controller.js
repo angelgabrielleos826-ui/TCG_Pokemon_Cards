@@ -11,29 +11,25 @@ const getCards = async (req, res) => {
 };
 
 //Crear carta que se subira a la base de datos
-const createCard = async (req, res) => {
-  try {
-    const {name, image, price, stock } = req.body;
+async function createCard(req, res, ) {
+    const { name, image, price, stock } = req.body;
 
+    // Validamos los  campos obligatorios
     if (!name || !image || !price) {
-      return res.status(400).json({
-        message: "No se han llenado los campos obligatorios"
-      });
+        return res.status(400).json({ error: "name, image y price son requeridos" });
     }
-    const card = new Card({
-      name: name,
-      image: image,
-      price: price,
-      stock: stock
+
+    // Creacion de la carta
+    const card = await Card.create({ name, image, price, stock });
+
+    // Respuesta de seguimiento
+    return res.status(201).json({
+        id: card._id,
+        name: card.name,
+        price: card.price,
+        stock: card.stock
     });
+}
 
-    await card.save();
-
-    res.status(201).json(card);
-  } catch (error) {
-    res.status(500).json({ message: "Error al crear la carta"})
-  }
-
-};
 
 module.exports = { getCards, createCard };

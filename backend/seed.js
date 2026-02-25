@@ -105,8 +105,18 @@ async function seed() {
     },
   ];
 
-  await Card.deleteMany({});
-  await Card.insertMany(cards);
+
+//Hicimos uso de Ia para este for
+//Este for verifica si las cartas del seed estan creadas,si estan en la base de datos no las vuelve a crear
+for (let i = 0; i < cards.length; i++) {
+
+  const exists = await Card.findOne({ name: cards[i].name });
+
+  if (!exists) {
+    await Card.create(cards[i]);
+  }
+}
+
 
   console.log("Cartas creadas ");
   await mongoose.disconnect();
