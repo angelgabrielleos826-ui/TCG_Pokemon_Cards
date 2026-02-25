@@ -1,4 +1,4 @@
-// checkout.js - Lógica del modal de pago
+// checkout.js - Lógica del modo de pago
 const API_URL_ORDERS = "http://localhost:3000/api";
 
 function abrirModalPago() {
@@ -41,7 +41,7 @@ function validarFormulario() {
     return true;
 }
 
-function formatMoney(value) {
+function formatMoney(value) {  //de la linea 50 hasta la 78 utilice IA
     const number = Number(value || 0);
     return number.toFixed(2);
 }
@@ -140,7 +140,7 @@ async function confirmarCompra() {
 }
 
 // Formateo automático del número de tarjeta
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {     //Aqui utilice IA
     const inputNumero = document.getElementById("cardNumber");
     if (inputNumero) {
         inputNumero.addEventListener("input", (e) => {
@@ -160,6 +160,20 @@ document.addEventListener("DOMContentLoaded", () => {
             e.target.value = valor;
         });
     }
+    // Solo letras en nombre completo y nombre de tarjeta   utilice IA en esto tambien 
+    const inputFullName = document.getElementById("fullName");
+    if (inputFullName) {
+        inputFullName.addEventListener("input", (e) => {
+            e.target.value = e.target.value.replace(/[0-9]/g, "");
+        });
+    }
+
+    const inputCardHolder = document.getElementById("cardHolder");
+    if (inputCardHolder) {
+        inputCardHolder.addEventListener("input", (e) => {
+            e.target.value = e.target.value.replace(/[0-9]/g, "");
+        });
+    } 
 
     const overlay = document.getElementById("modalPago");
     if (overlay) {

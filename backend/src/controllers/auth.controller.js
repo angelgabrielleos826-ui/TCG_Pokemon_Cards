@@ -55,7 +55,7 @@ async function login (req, res)  {
     const ok = await bcrypt.compare(password, user.passwordHash);
     if(!ok) return res.status(401).json({error: "credenciales invalidas"});
     
-    const expiredMinutes = 10;
+    const expiredMinutes = 30;
     const expiresAt = new Date(Date.now()+expiredMinutes* 60 * 1000);
     
     const session =await Session.create(
