@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Card = require("./src/models/Card");
+const bcrypt = require("bcryptjs");
+const User = require("./src/models/User")
 
 mongoose.connect("mongodb://127.0.0.1/TCG_Pokemon_Cards");
 
@@ -117,8 +119,39 @@ for (let i = 0; i < cards.length; i++) {
   }
 }
 
-
   console.log("Cartas creadas ");
+
+
+  await User.deleteMany({});
+
+  const admins = [
+  {
+    email: "DerekV@gmail.com",
+    passwordHash: await bcrypt.hash("123456", 3),
+    role: "admin"
+  },
+  {
+    email: "AndreaA@gmail.com",
+    passwordHash: await bcrypt.hash("123456", 3),
+    role: "admin"
+  },
+  {
+    email: "AngelA@gmail.com",
+    passwordHash: await bcrypt.hash("123456", 3),
+    role: "admin"
+  },
+  {
+    email: "Andre@gmail.com",
+    passwordHash: await bcrypt.hash("123456", 3),
+    role: "admin"
+  }
+
+];
+
+  await User.insertMany(admins);
+
+  console.log("Admins cargados");
+
   await mongoose.disconnect();
 }
 
