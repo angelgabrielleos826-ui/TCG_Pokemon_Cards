@@ -11,7 +11,8 @@ const createEventValidator = [
     body("lugar").isString().notEmpty().withMessage("El lugar es requerido"),
     body("entrada").isFloat({ min: 0 }).withMessage("La entrada debe ser mayor o igual a 0"),
     body("descripcion").isString().notEmpty().withMessage("La descripcion es requerida"),
-    body("activo").optional().isBoolean().withMessage("Valor invalido")
+    body("activo").optional().isBoolean().withMessage("Valor invalido"),
+    body("imagen").isString().notEmpty().withMessage("Imagen requerida")
 ];
 
 // Validador para la actualizacion de eventos
@@ -25,7 +26,8 @@ const updateEventValidator = [
     body("lugar").optional().isString().notEmpty().withMessage("Lugar invalido"),
     body("entrada").optional().isFloat({ min: 0 }).withMessage("Entrada invalida"),
     body("descripcion").optional().isString().notEmpty().withMessage("Descripcion invalida"),
-    body("activo").optional().optional().isBoolean().withMessage("Valor invalido")
+    body("activo").optional().isBoolean().withMessage("Valor invalido"),
+    body("imagen").optional().isString().notEmpty().withMessage("Imagen invalida")
 ];
 
 // Validador para la visualizacion de eventos

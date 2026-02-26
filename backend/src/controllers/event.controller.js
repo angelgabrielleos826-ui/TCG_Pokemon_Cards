@@ -11,6 +11,7 @@ async function create(req, res, next) {
         lugar,
         entrada,
         descripcion,
+        imagen,
         activo = true
     } = req.body;
 
@@ -22,13 +23,14 @@ async function create(req, res, next) {
         lugar,
         entrada,
         descripcion,
+        imagen,
         activo
     });
 
     res.status(201).json(event);
 }
 
-// GET /api/events?
+// GET /api/events? (Paginacion)
 async function list(req, res, next) {
     const page = Math.max(parseInt(req.query.page || "1", 10), 1);
     const limit = Math.min(Math.max(parseInt(req.query.limit || "10", 10), 1), 100);

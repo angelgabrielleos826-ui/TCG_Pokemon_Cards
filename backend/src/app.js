@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const path = require("path");
 
 const authRoutes = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
@@ -9,20 +10,39 @@ const cardsRoutes = require("./routes/cards.routes");
 const orderRoutes = require("./routes/order.routes");
 const ticketRoutes = require("./routes/ticket.routes");
 const errorHandler = require("./middleware/errorHandler");
+const productRoutes = require("./routes/product.routes");
+const eventRoutes = require("./routes/event.routes");
+const registrationRoutes = require("./routes/registration.routes");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 
+// Acceso a directorio (frontend)
+app.use(express.static(path.resolve(__dirname, "../../"), {
+  index: false
+}));
+
+app.get("/", (req, res) => {
+  res.redirect("/login.html");
+});
+
+// Rutas
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/cards", cardsRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/registrations", registrationRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/cards", cardsRoutes);
 app.use("/api/orders", orderRoutes);
-app.use("/api/tickets", ticketRoutes);
+app.use("/api/ticket", ticketRoutes);
 
+// Error Handler
 app.use(errorHandler);
 
 app.get("/health", (req, res) => {

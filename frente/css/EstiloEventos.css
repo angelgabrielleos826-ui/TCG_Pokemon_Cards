@@ -169,6 +169,30 @@ footer p {
     margin: 5px 0;
 }
 
+/* MODAL EVENTOS (MEETS) */
+
+.modal-crear-evento .modal-contenido {
+    animation: scaleIn 0.2s ease;
+    max-width: 600px;
+}
+
+.modal-crear-evento textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.modal-crear-evento .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.modal-crear-evento .full {
+    grid-column: span 2;
+}
+
 /* MODAL (REGISTRO) */
 .modal {
     display: none;
@@ -258,6 +282,24 @@ footer p {
     align-items: flex-start;    
     height: 10vh;
     position: absolute; left: 15px;
+}
+
+/* Boton para agregar eventos (MEETS) */
+
+.fab {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 9999;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: orange;
+    color: white;
+    font-size: 30px;
+    border: none;
+    cursor: pointer;
+    display: none;
 }
 
 @media (max-width: 768px) {
