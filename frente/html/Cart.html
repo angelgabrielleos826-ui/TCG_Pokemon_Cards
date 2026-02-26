@@ -8,7 +8,7 @@
 <body>
 
 <h1>Tienda TCG</h1>
-
+<button id="btnMoneda">Cambiar a USD</button>
 <div class="contenedor">
 
     <section class="productos" id="productos"></section>
@@ -16,7 +16,7 @@
     <aside class="carrito">
         <h2> Carrito</h2>
         <ul id="listaCarrito"></ul>
-        <p class="total">Total: $<span id="total">0</span></p>
+        <p class="total">Total: <span id="total">$0.00 MXN</span></p>
         <button onclick="vaciarCarrito()">Vaciar carrito</button>
         <button class="btn-pagar" id="btnPagar" onclick="abrirModalPago()"> Pagar</button>
     </aside>
@@ -27,14 +27,14 @@
 <div class="modal-overlay" id="modalPago">
     <div class="modal">
 
-        <button class="modal-close" onclick="cerrarModalPago()">✕</button>
+        <button class="modal-close" onclick="cerrarModalPago()">X</button>
 
         <div id="formPago">
             <h2> Finalizar Compra</h2>
 
             <div class="resumen-pago">
                 <span>Total a pagar:</span>
-                <span>$<span id="totalModal">0</span></span>
+                <span id="totalModal">$0.00 MXN</span>
             </div>
 
             <div class="form-seccion">
@@ -122,3 +122,5 @@
 <script src="../js/checkout.js"></script>
 </body>
 </html>
+
+

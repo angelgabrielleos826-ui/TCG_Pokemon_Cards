@@ -8,6 +8,7 @@ const cartRoutes = require("./routes/cart.routes");
 const cardsRoutes = require("./routes/cards.routes");
 const orderRoutes = require("./routes/order.routes");
 const ticketRoutes = require("./routes/ticket.routes");
+const tipoCambioRoutes = require("./routes/tipoCambio.routes");
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
@@ -22,6 +23,7 @@ app.use("/api/cards", cardsRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/tickets", ticketRoutes);
+app.use("/api/tipo-cambio", tipoCambioRoutes);
 
 app.use(errorHandler);
 

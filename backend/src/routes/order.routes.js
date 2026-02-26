@@ -3,12 +3,19 @@ const auth = require("../middleware/auth");
 const Cart = require("../models/Cart");
 const Order = require("../models/Order");
 const Ticket = require("../models/Ticket");
+const { obtenerTipoCambio } = require("../services/tipoCambio.service");
 
 const router = express.Router();
 
+function round2(value) {
+    return Number((Number(value) || 0).toFixed(2));
+}
+
 function buildTicketFromOrder(order, paymentMethod = "Tarjeta") {
+    const currency = order.currency || "MXN";
+
     const productos = order.items.map((item) => {
-        const precio = item.priceAtPurchase || item.card?.price || 0;
+        const precio = round2(item.priceAtPurchase || item.card?.price || 0);
         const cantidad = item.quantity || 1;
 
         return {
@@ -16,7 +23,7 @@ function buildTicketFromOrder(order, paymentMethod = "Tarjeta") {
             nombre: item.card?.name || "Producto",
             precio,
             cantidad,
-            subtotal: precio * cantidad
+            subtotal: round2(precio * cantidad)
         };
     });
 
@@ -25,7 +32,9 @@ function buildTicketFromOrder(order, paymentMethod = "Tarjeta") {
         user: order.user,
         numeroOrden: `PKM-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
         productos,
-        total: order.total,
+        total: round2(order.total),
+        currency,
+        exchangeRate: order.exchangeRate || 1,
         metodoPago: paymentMethod,
     };
 }
@@ -33,10 +42,17 @@ function buildTicketFromOrder(order, paymentMethod = "Tarjeta") {
 //POST - FINALIZAR COMPRA
 router.post("/checkout", auth, async(req, res) => {
     try {
-        const { shippingInfo, cardInfo, items, total } = req.body;
+        const { shippingInfo, cardInfo, items, total, currency } = req.body;
 
         if(!shippingInfo || !cardInfo){
             return res.status(400).json({error: "Faltan datos de envio o tarjeta"});
+        }
+
+        const selectedCurrency = currency === "USD" ? "USD" : "MXN";
+        let exchangeRate = 1;
+
+        if (selectedCurrency === "USD") {
+            exchangeRate = await obtenerTipoCambio();
         }
 
         // Usar items del frontend si el carrito del backend está vacío
@@ -48,29 +64,38 @@ router.post("/checkout", auth, async(req, res) => {
         if (cart && cart.items.length > 0) {
             // Usar carrito del backend
             cart.items.forEach(item => {
-                const price = item.card.price;
-                orderTotal += price * item.quantity;
+                const basePrice = Number(item.card.price || 0);
+                const price = selectedCurrency === "USD" ? basePrice * exchangeRate : basePrice;
+                const priceAtPurchase = round2(price);
+
+                orderTotal += priceAtPurchase * item.quantity;
                 orderItems.push({
                     card: item.card._id,
                     quantity: item.quantity,
-                    priceAtPurchase: price
+                    priceAtPurchase
                 });
             });
-        }else if (items && items.length > 0) {
+
+            orderTotal = round2(orderTotal);
+        } else if (items && items.length > 0) {
             orderItems = items.map((item) => ({
                 card: item.card || item.cardId,
                 quantity: item.quantity || 1,
-                priceAtPurchase: item.priceAtPurchase || item.price || 0,
+                priceAtPurchase: round2(item.priceAtPurchase || item.price || 0),
             }));
 
-            orderTotal = orderItems.reduce(
+            orderTotal = round2(orderItems.reduce(
                 (acc, item) => acc + item.priceAtPurchase * item.quantity,
                 0
-            );
-        }else if (total && total > 0) {
-            orderTotal = total; 
+            ));
+        } else if (total && Number(total) > 0) {
+            orderTotal = round2(total);
         } else {
             return res.status(400).json({error: "El carrito esta vacio"});
+        }
+
+        if (!Number.isFinite(orderTotal) || orderTotal <= 0) {
+            return res.status(400).json({ error: "Total inválido" });
         }
 
         const lastFour = cardInfo.cardNumber.slice(-4);
@@ -79,6 +104,8 @@ router.post("/checkout", auth, async(req, res) => {
             user: req.user.sub,
             items: orderItems,
             total: orderTotal,
+            currency: selectedCurrency,
+            exchangeRate: selectedCurrency === "USD" ? exchangeRate : 1,
             shippingInfo,
             cardInfo:{
                 cardHolder: cardInfo.cardHolder,
