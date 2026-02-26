@@ -50,6 +50,15 @@ const ticketSchema = new mongoose.Schema(
       required: true,
       min: 0,
     },
+    currency: {
+      type: String,
+      enum: ["MXN", "USD"],
+      default: "MXN",
+    },
+    exchangeRate: {
+      type: Number,
+      default: 1,
+    },
     metodoPago: {
       type: String,
       default: "Tarjeta",

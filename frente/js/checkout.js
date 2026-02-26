@@ -1,10 +1,30 @@
 // checkout.js - Lógica del modo de pago
 const API_URL_ORDERS = "http://localhost:3000/api";
 
-function abrirModalPago() {
-    const totalVisible = document.getElementById("total").textContent;
+function obtenerMonedaActual() {
+    return (typeof monedaActual !== "undefined" && monedaActual === "USD") ? "USD" : "MXN";
+}
 
-    if (!totalVisible || totalVisible === "0") {
+function formatearMonto(value, currency = obtenerMonedaActual()) {
+    const number = Number(value || 0);
+    return currency === "USD"
+        ? `US$${number.toFixed(2)} USD`
+        : `$${number.toFixed(2)} MXN`;
+}
+
+function extraerNumeroDeTexto(texto) {
+    if (!texto) return 0;
+
+    const normalized = String(texto).replace(",", ".");
+    const match = normalized.match(/-?\d+(\.\d+)?/);
+    return match ? Number(match[0]) : 0;
+}
+
+function abrirModalPago() {
+    const totalVisible = document.getElementById("total").textContent.trim();
+    const totalNumerico = extraerNumeroDeTexto(totalVisible);
+
+    if (!totalVisible || !Number.isFinite(totalNumerico) || totalNumerico <= 0) {
         alert("Tu carrito está vacío. Agrega cartas antes de pagar.");
         return;
     }
@@ -41,21 +61,17 @@ function validarFormulario() {
     return true;
 }
 
-function formatMoney(value) {  //de la linea 50 hasta la 78 utilice IA
-    const number = Number(value || 0);
-    return number.toFixed(2);
-}
-
 function mostrarTicket(ticket) {
     const ticketContainer = document.getElementById("ticketContainer");
     if (!ticketContainer || !ticket) return;
 
     const fecha = new Date(ticket.fecha || ticket.createdAt || Date.now()).toLocaleString("es-MX");
+    const currency = ticket.currency || obtenerMonedaActual();
 
     const productos = (ticket.productos || []).map((p) => `
         <li class="ticket-item">
             <span>${p.nombre} x${p.cantidad}</span>
-            <strong>$${formatMoney(p.subtotal)}</strong>
+            <strong>${formatearMonto(p.subtotal, currency)}</strong>
         </li>
     `).join("");
 
@@ -64,8 +80,9 @@ function mostrarTicket(ticket) {
         <p><strong>Orden:</strong> ${ticket.numeroOrden}</p>
         <p><strong>Fecha:</strong> ${fecha}</p>
         <p><strong>Método de pago:</strong> ${ticket.metodoPago || "Tarjeta"}</p>
+        <p><strong>Moneda:</strong> ${currency}</p>
         <ul class="ticket-list">${productos}</ul>
-        <p class="ticket-total"><strong>Total:</strong> $${formatMoney(ticket.total)}</p>
+        <p class="ticket-total"><strong>Total:</strong> ${formatearMonto(ticket.total, currency)}</p>
     `;
 
     ticketContainer.classList.add("activo");
@@ -95,7 +112,8 @@ async function confirmarCompra() {
         cardNumber: document.getElementById("cardNumber").value.replace(/\s/g, "")
     };
 
-    const total = parseFloat(document.getElementById("total").textContent);
+    const currency = obtenerMonedaActual();
+    const total = extraerNumeroDeTexto(document.getElementById("total").textContent);
 
     const token = localStorage.getItem("jwt_token");
 
@@ -109,7 +127,8 @@ async function confirmarCompra() {
             body: JSON.stringify({
                 shippingInfo,
                 cardInfo,
-                total
+                total,
+                currency
             })
         });
 
@@ -123,8 +142,8 @@ async function confirmarCompra() {
         document.getElementById("mensajeExito").classList.add("activo");
         mostrarTicket(data.ticket);
 
-        if (typeof cargarCarrito === "function") {
-            await cargarCarrito();
+        if (typeof cargarYMostrarCarrito === "function") {
+            await cargarYMostrarCarrito();
         }
 
         btnConfirmar.disabled = false;
@@ -140,7 +159,7 @@ async function confirmarCompra() {
 }
 
 // Formateo automático del número de tarjeta
-document.addEventListener("DOMContentLoaded", () => {     //Aqui utilice IA
+document.addEventListener("DOMContentLoaded", () => {
     const inputNumero = document.getElementById("cardNumber");
     if (inputNumero) {
         inputNumero.addEventListener("input", (e) => {
@@ -160,7 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {     //Aqui utilice IA
             e.target.value = valor;
         });
     }
-    // Solo letras en nombre completo y nombre de tarjeta   utilice IA en esto tambien 
+
+    // Solo letras en nombre completo y nombre de tarjeta
     const inputFullName = document.getElementById("fullName");
     if (inputFullName) {
         inputFullName.addEventListener("input", (e) => {
@@ -173,7 +193,7 @@ document.addEventListener("DOMContentLoaded", () => {     //Aqui utilice IA
         inputCardHolder.addEventListener("input", (e) => {
             e.target.value = e.target.value.replace(/[0-9]/g, "");
         });
-    } 
+    }
 
     const overlay = document.getElementById("modalPago");
     if (overlay) {

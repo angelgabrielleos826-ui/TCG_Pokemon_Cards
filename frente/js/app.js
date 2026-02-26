@@ -135,7 +135,7 @@ function crearBotonIrCarrito() {
 
   const btn = document.createElement('button');
   btn.id = 'btn-ir-carrito-backend';
-  btn.innerHTML = '🛒 COMPRAR!';
+  btn.innerHTML = 'COMPRAR!';
   btn.style.cssText = `
     position: fixed;
     bottom: 30px;
@@ -152,7 +152,7 @@ function crearBotonIrCarrito() {
   `;
   
   btn.addEventListener('click', () => {
-    window.location.href = 'Cart.html';
+    window.location.href = '/frente/html/Cart.html';
   });
   
   document.body.appendChild(btn);
@@ -194,7 +194,7 @@ async function conectarConBackend() {
       }
 
       if (exitosos > 0) {
-        alert(`${exitosos} carta(s) agregada(s) al carrito ✅`);
+        alert(`${exitosos} carta(s) agregada(s) al carrito`);
       }
 
       // Limpiar selección (mantener la lógica original)
@@ -209,3 +209,5 @@ async function conectarConBackend() {
 if (typeof obtenerCartasBackend === 'function') {
   conectarConBackend();
 }
+
+

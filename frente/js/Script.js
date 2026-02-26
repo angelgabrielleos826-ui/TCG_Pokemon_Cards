@@ -1,11 +1,13 @@
 const contenedor = document.getElementById("productos");
+const API_CARDS_URL = "http://localhost:3000/api/cards";
 
-let carrito = [];
-
-// === 1️⃣ Cargar cartas desde MongoDB ===
 async function cargarProductos() {
+  if (!contenedor) return;
+
   try {
-    const res = await fetch("http://localhost:3000/api/cards");
+    const res = await fetch(API_CARDS_URL);
+    if (!res.ok) throw new Error("No se pudieron cargar las cartas");
+
     const productos = await res.json();
     mostrarProductos(productos);
   } catch (err) {
@@ -13,60 +15,39 @@ async function cargarProductos() {
   }
 }
 
-// === 2️⃣ Mostrar cartas en la página ===
 function mostrarProductos(productos) {
+  if (!contenedor) return;
+
   contenedor.innerHTML = "";
-  productos.forEach(p => {
+
+  productos.forEach((p) => {
     const div = document.createElement("div");
     div.classList.add("card");
 
     div.innerHTML = `
       <img src="${p.image}" alt="${p.name}">
       <p>${p.name}</p>
-      <p>$${p.price}</p>
-      <button onclick="agregar('${p._id}', '${p.name}', ${p.price}, '${p.image}')">Agregar</button>
+      <p>$${Number(p.price).toFixed(2)} MXN</p>
+      <button class="btn-agregar" data-id="${p._id}">Agregar</button>
     `;
 
     contenedor.appendChild(div);
   });
 }
 
-// === 3️⃣ Agregar carta al carrito (en memoria) ===
-function agregar(id, nombre, precio, img) {
-  carrito.push({ id, nombre, precio, img });
-  actualizarCarrito();
-}
+if (contenedor) {
+  contenedor.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".btn-agregar");
+    if (!btn) return;
 
-// === 4️⃣ Actualizar lista del carrito ===
-function actualizarCarrito() {
-  listaCarrito.innerHTML = "";
-  let suma = 0;
+    const cardId = btn.dataset.id;
+    if (!cardId) return;
 
-  carrito.forEach((p, i) => {
-    suma += p.precio;
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <img src="${p.img}" width="40" style="vertical-align: middle; margin-right: 10px;">
-      ${p.nombre} - $${p.precio}
-      <button onclick="eliminar(${i})">❌</button>
-    `;
-    listaCarrito.appendChild(li);
+    const ok = await agregarCartaAlBackend(cardId, 1);
+    if (ok && typeof cargarYMostrarCarrito === "function") {
+      await cargarYMostrarCarrito();
+    }
   });
-
-  total.textContent = suma;
 }
 
-// === 5️⃣ Eliminar una carta del carrito ===
-function eliminar(i) {
-  carrito.splice(i, 1);
-  actualizarCarrito();
-}
-
-// === 6️⃣ Vaciar carrito ===
-function vaciarCarrito() {
-  carrito = [];
-  actualizarCarrito();
-}
-
-// === 7️⃣ Cargar cartas al abrir la página ===
 cargarProductos();
