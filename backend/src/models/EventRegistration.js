@@ -24,11 +24,7 @@ const EventRegistrationSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    tarjetaNumero: {
-        type: String,
-        required: true
-    },
-    tarjetaCVV: {
+    lastFour: {
         type: String,
         required: true
     },
@@ -40,24 +36,6 @@ const EventRegistrationSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
-}, {timeseries: true});
-
-// Encryptacion - Informacion sensible hasheada
-EventRegistrationSchema.pre('save', async function(next){
-
-    if (this.isModified('tarjetaNumero')) {
-        this.tarjetaNumero = await bcrypt.hash(this.tarjetaNumero, 10);
-    }
-    
-    if (this.isModified('tarjetaCVV')) {
-        this.tarjetaCVV = await bcrypt.hash(this.tarjetaCVV, 10);
-    }
-
-    if (this.isModified('tarjetaVencimiento')) {
-        this.tarjetaVencimiento = await bcrypt.hash(this.tarjetaVencimiento);
-    }
-
-    next();
-});
+}, {timestamps: true});
 
 module.exports = mongoose.model('EventRegistration', EventRegistrationSchema);

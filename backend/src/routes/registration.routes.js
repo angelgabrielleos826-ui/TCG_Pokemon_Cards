@@ -2,7 +2,7 @@ const express = require("express");
 
 // Middlewares
 const { validate } = require("../middleware/validate");
-const { auth } = require("../middleware/auth");
+const auth = require("../middleware/auth");
 const { requireRole } = require("../middleware/requireRole");
 
 // Validators
@@ -13,11 +13,10 @@ const registrationController = require("../controllers/registration.controller")
 
 const router = express.Router();
 
-// Public routes (registro de usuario)
+// Public routes (registro de usuario pero con autenticacion)
 router.post(
     '/',
     auth,
-    requireRole("user"),
     RegistrationValidator,
     validate,
     registrationController.create

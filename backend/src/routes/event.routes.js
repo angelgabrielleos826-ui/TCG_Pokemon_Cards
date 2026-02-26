@@ -2,7 +2,7 @@ const express = require("express");
 
 //  Middlewares
 const { validate } = require("../middleware/validate");
-const { auth } = require("../middleware/auth");
+const auth = require("../middleware/auth");
 const { requireRole } = require("../middleware/requireRole");
 
 // Validators
