@@ -32,6 +32,10 @@ const EventSchema = new mongoose.Schema({
     activo: {
         type: Boolean,
         default: true
+    },
+    imagen: {
+        type: String,
+        required: true
     }
 }, { timestamps: true});
 

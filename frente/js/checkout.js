@@ -1,4 +1,4 @@
-// checkout.js - Lógica del modal de pago
+// checkout.js - Lógica del modo de pago
 const API_URL_ORDERS = "http://localhost:3000/api";
 
 function obtenerMonedaActual() {
@@ -177,6 +177,21 @@ document.addEventListener("DOMContentLoaded", () => {
                 valor = valor.slice(0, 2) + "/" + valor.slice(2, 4);
             }
             e.target.value = valor;
+        });
+    }
+
+    // Solo letras en nombre completo y nombre de tarjeta
+    const inputFullName = document.getElementById("fullName");
+    if (inputFullName) {
+        inputFullName.addEventListener("input", (e) => {
+            e.target.value = e.target.value.replace(/[0-9]/g, "");
+        });
+    }
+
+    const inputCardHolder = document.getElementById("cardHolder");
+    if (inputCardHolder) {
+        inputCardHolder.addEventListener("input", (e) => {
+            e.target.value = e.target.value.replace(/[0-9]/g, "");
         });
     }
 

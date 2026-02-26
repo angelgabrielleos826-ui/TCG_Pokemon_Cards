@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let precioBoleto = 0;
     let nombreEvento = "";
+    let eventoIdSeleccionado = null;
 
     // ===== MODAL REGISTRO =====
     const modal = document.getElementById("modalRegistro");
@@ -10,9 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const totalInput = document.getElementById("total");
     const eventoTexto = document.getElementById("eventoSeleccionado");
 
-    function abrirModal(precio, evento) {
+    function abrirModal(precio, evento, eventoId) {
         precioBoleto = precio;
         nombreEvento = evento;
+        eventoIdSeleccionado = eventoId;
+
+        window.eventoIdSeleccionado = eventoId;
 
         boletosInput.value = 1;
         eventoTexto.textContent = "Evento: " + nombreEvento;
@@ -53,18 +57,56 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.style.overflow = "auto";
     });
 
-    modalRecibo.addEventListener("click", e => {
-        if (e.target === modalRecibo) {
-            modalRecibo.style.display = "none";
-            document.body.style.overflow = "auto";
-        }
-    });
-
     const formRegistro = document.getElementById("formRegistro");
 
-    formRegistro.addEventListener("submit", (e) => {
+    formRegistro.addEventListener("submit", async (e) => {
         e.preventDefault();
-        mostrarRecibo();
+
+        const nombre = document.getElementById("nombre").value;
+        const anio = document.getElementById("anio").value;
+        const mes = document.getElementById("mes").value;
+        const dia = document.getElementById("dia").value;
+        const boletos = Number(boletosInput.value);
+
+        if (!nombre || !anio || !mes || !dia) {
+            alert("Por favor completa todos los campos");
+            return;
+        }
+
+        const fechaNacimiento = `${anio}-${mes}-${dia}`;
+        const total = boletos * precioBoleto;
+
+        try {
+            const res = await fetch("http://localhost:3000/api/registrations", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include", // IMPORTANTE para enviar cookies JWT
+                body: JSON.stringify({
+                    evento: window.eventoIdSeleccionado, // debes guardar este id
+                    nombreCompleto: nombre,
+                    fechaNacimiento,
+                    boletos,
+                    tarjetaNumero: "0000000000000000", // si no estás usando inputs reales
+                    tarjetaCVV: "000",
+                    tarjetaVencimiento: "12/30",
+                    totalPagado: total
+                })
+            });
+
+            if (!res.ok) {
+                const error = await res.json();
+                alert(error.error || "Error al registrar");
+                return;
+            }
+
+            mostrarRecibo();
+
+        } catch (err) {
+            console.error("Error registrando:", err);
+            alert("Error de conexión con el servidor");
+        }
     });
 
     function mostrarRecibo() {

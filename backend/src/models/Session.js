@@ -27,4 +27,3 @@ const sesionSchema = new mongoose.Schema(
 
 sesionSchema.index({expiresAt: 1}, {expireAfterSeconds:0});
 module.exports = mongoose.model("Session", sesionSchema);
-module.exports = mongoose.model("Session", sesionSchema);
