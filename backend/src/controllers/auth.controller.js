@@ -77,14 +77,10 @@ async function login (req, res)  {
     );
 
     //return res.status(201).json({jwt_token: token});
-   res
-   .cookie("access_token", token, cookieOptions())
-   .cookie("session_id", String(session._id), cookieOptions())
-   .json({ ok: true, jwt_token: token });// agregue eso para que regrese el token en el body
     res
     .cookie("access_token", token, cookieOptions())
     .cookie("session_id", String(session._id), cookieOptions())
-    .json({ ok:true });
+    .json({ ok: true, jwt_token: token });
 };
 
 async function logout(req, res, next) {
