@@ -20,8 +20,7 @@ export default function Register() {
     setLoading(true);
     try {
       await authService.register(email.trim(), password);
-      await authService.login(email.trim(), password);
-      window.location.href = "http://localhost:3000/index.html";
+      window.location.href = "/login";
     } catch (error) {
       setErrorMsg(error.message || "No se pudo registrar");
     } finally {
