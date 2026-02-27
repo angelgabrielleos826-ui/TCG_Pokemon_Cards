@@ -4,7 +4,14 @@
     box-sizing: border-box;
 }
 
-body {
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.digimon-page {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
                 url('../resources/fondo4.png');
@@ -14,25 +21,24 @@ body {
     min-height: 100vh;
 }
 
-header {
-     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+.digimon-page header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     color: white;
     padding: 20px;
     text-align: center;
+    position: relative;
 }
 
-h1 {
+.digimon-page h1 {
     margin: 0;
 }
 
-/* CONTENEDOR PRINCIPAL */
 .galeria {
     display: flex;
     justify-content: center;
     padding: 60px 20px;
 }
 
-/* CONTENEDOR DE CARTAS */
 .cartas {
     display: flex;
     flex-wrap: wrap;
@@ -41,14 +47,13 @@ h1 {
     max-width: 1400px;
 }
 
-/* CADA CARTA INDIVIDUAL */
 .carta {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 }
 
-/* IMÁGENES DE CARTAS */
 .carta img {
     width: 160px;
     height: 225px;
@@ -63,8 +68,6 @@ h1 {
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
 }
 
-/* ==== AGREGUE ESTO NUEVO HASTA ABAJO  ==== */
-/* ==== EFECTO DE SELECCIÓN ==== */
 .carta.seleccionada {
     transform: scale(1.1);
     box-shadow: 0 0 25px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.6) inset;
@@ -72,16 +75,12 @@ h1 {
     transition: all 0.3s ease-in-out;
 }
 
-.carta img {
-    transition: all 0.3s ease;
-}
-
 .carta:hover img {
     transform: scale(1.05);
     filter: brightness(1.1);
 }
 
-/* ==== BOTÓN FLOTANTE "AGREGAR AL CARRITO" ==== */
+/* ===== BOTÓN FLOTANTE ===== */
 #btn-agregar-carrito {
     position: fixed;
     top: 20px;
@@ -105,89 +104,18 @@ h1 {
     background: linear-gradient(135deg, #ffa500, #ff6347);
 }
 
-#btn-agregar-carrito.oculto {
-    display: none;
+#btn-agregar-carrito:disabled {
+    background: linear-gradient(135deg, #aaa, #888);
+    cursor: not-allowed;
+    transform: none;
 }
 
-/* ==== CARRITO ==== */
-#carrito {
-    max-width: 500px;
-    background: rgba(255, 255, 255, 0.95);
-    margin: 30px auto;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #222;
-    
-    /* efecto deslizante */
-    opacity: 0;
-    transform: translateY(-50px);
-    transition: all 0.5s ease;
-}
-
-#carrito.mostrar {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-#carrito h2 {
-    text-align: center;
-    color: #1e3c72;
-    margin-bottom: 15px;
-}
-
-#lista-carrito {
-    list-style: none;
-    padding: 0;
-}
-
-#lista-carrito li {
-    background: white;
-    margin-bottom: 10px;
-    padding: 10px 15px;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#lista-carrito button {
-    margin-left: 5px;
-    border: none;
-    padding: 6px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-#lista-carrito .editar {
-    background: #007bff;
-    color: white;
-}
-
-#lista-carrito .editar:hover {
-    background: #0056b3;
-}
-
-#lista-carrito .eliminar {
-    background: #dc3545;
-    color: white;
-}
-
-#lista-carrito .eliminar:hover {
-    background: #a71d2a;
-}
-
-/* Boton para volver (Home) */
-
-.volver-li{
+/* ===== BOTÓN VOLVER ===== */
+.volver-li {
     list-style: none;
 }
 
-.btn-volver{
+.btn-volver {
     display: flex;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -198,7 +126,15 @@ h1 {
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
     justify-content: flex-start;
-    align-items: flex-start;    
+    align-items: center;
     height: 6vh;
-    position: absolute; left: 15px;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.btn-volver:hover {
+    transform: translateY(-52%);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
