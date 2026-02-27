@@ -1,0 +1,255 @@
+:root {
+  --bg-main: #000000;
+  --bg-panel: #ffffff;
+  --ink: #1b3566;
+  --accent: #667eea;
+  --accent-dark: #764ba2;
+  --stroke: #dbe2f1;
+  --ok: #0f7b47;
+  --error: #a02323;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg-main);
+  color: var(--ink);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.community-page {
+  width: min(1100px, 92vw);
+  margin: 2.5rem auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.community-header,
+.form-section,
+.list-section {
+  border: 2px solid var(--stroke);
+  border-radius: 18px;
+  background: var(--bg-panel);
+  padding: 1.3rem;
+  box-shadow: 0 14px 36px rgba(34, 28, 16, 0.08);
+}
+
+.community-header {
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 5.5rem;
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  color: #ffffff;
+}
+
+.community-kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.community-header h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  color: #ffffff;
+}
+
+.community-header p {
+  color: #eef4ff;
+}
+
+.community-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.community-links a {
+  text-decoration: none;
+  color: #18345f;
+  font-weight: 700;
+}
+
+.community-link-btn {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.community-link-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+.session-bar {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #eef4ff;
+  font-weight: 600;
+}
+
+.session-btn {
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.community-pacman {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.7rem;
+  width: 92px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.publication-form {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.publication-form input,
+.publication-form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #c7d5ee;
+  border-radius: 10px;
+  background: #fffdf7;
+  font-family: inherit;
+}
+
+.publication-form textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.form-actions {
+  margin-top: 0.4rem;
+  display: flex;
+  gap: 0.6rem;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  padding: 0.65rem 1.1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ghost-btn {
+  background: #eef2ff;
+  color: #18345f;
+}
+
+.danger-btn {
+  background: #9b111e;
+}
+
+.feedback {
+  margin: 0.7rem 0 0;
+  font-weight: 700;
+}
+
+.feedback.success {
+  color: var(--ok);
+}
+
+.feedback.error {
+  color: var(--error);
+}
+
+.cards-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.card-item {
+  display: grid;
+  grid-template-columns: 150px 1fr;
+  gap: 1rem;
+  padding: 0.8rem;
+  border: 1px solid #dbe2f1;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #dbe2f1;
+}
+
+.card-item h3 {
+  margin: 0;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #18345f;
+}
+
+.meta {
+  margin: 0.2rem 0;
+  font-size: 0.95rem;
+}
+
+.card-actions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.note {
+  margin-top: 0;
+  color: #2b4574;
+}
+
+@media (max-width: 760px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card-item {
+    grid-template-columns: 1fr;
+  }
+
+  .card-item img {
+    height: 220px;
+  }
+}

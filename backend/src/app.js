@@ -14,6 +14,7 @@ const errorHandler = require("./middleware/errorHandler");
 const productRoutes = require("./routes/product.routes");
 const eventRoutes = require("./routes/event.routes");
 const registrationRoutes = require("./routes/registration.routes");
+const communityRoutes = require("./routes/community.routes");
 
 const app = express();
 
@@ -29,7 +30,7 @@ app.use(express.static(path.resolve(__dirname, "../../"), {
 }));
 
 app.get("/", (req, res) => {
-  res.redirect("/login.html");
+  res.redirect("http://localhost:5173/login");
 });
 
 // Rutas
@@ -44,6 +45,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/tickets", ticketRoutes);
 app.use("/api/ticket", ticketRoutes);
 app.use("/api/tipo-cambio", tipoCambioRoutes);
+app.use("/api/community", communityRoutes);
 
 // Error Handler
 app.use(errorHandler);
