@@ -1,4 +1,4 @@
-async function request(path, option = {}) {
+async function request(path, options = {}) {
     const res = await fetch(path, {
         ...options,
         headers : {

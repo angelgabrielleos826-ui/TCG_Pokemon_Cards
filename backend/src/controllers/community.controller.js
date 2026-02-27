@@ -3,7 +3,11 @@ const Community = require("../models/Community");
 async function create(req, res, next){
     try {
         const {nombre, description, precio, cantidad, contacto} = req.body;
-        const image = req.file.path;
+        const image = req.file?.path || req.body.image;
+
+        if (!image) {
+            return res.status(400).json({ error: "La imagen es requerida" });
+        }
         
         const publication = await Community.create({
             user: req.user.sub,

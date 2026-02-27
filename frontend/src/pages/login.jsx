@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { authService } from "../services/auth";
 import "../assets/css/login.css";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,7 +17,16 @@ export default function Login() {
       setErrorMsg("Todos los campos son requeridos");
       return;
     }
-    console.log("Login con:", { email, password });
+
+    setLoading(true);
+    try {
+      await authService.login(email.trim(), password);
+      window.location.href = "http://localhost:3000/index.html";
+    } catch (error) {
+      setErrorMsg(error.message || "No se pudo iniciar sesion");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -31,7 +42,9 @@ export default function Login() {
           <label htmlFor="password">Contraseña:</label>
           <input type="password" id="password" name="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
 
-          <button type="submit">Iniciar Sesión</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Ingresando..." : "Iniciar Sesión"}
+          </button>
         </form>
 
         <p>¿No tiene cuenta? <Link to="/register">Regístrate aquí</Link></p>

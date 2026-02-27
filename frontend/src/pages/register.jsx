@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { authService } from "../services/auth";
 import "../assets/css/register.css";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,8 +16,17 @@ export default function Register() {
       setErrorMsg("Todos los campos son requeridos");
       return;
     }
-    // TODO: conectar con backend
-    console.log("Register con:", { email, password });
+
+    setLoading(true);
+    try {
+      await authService.register(email.trim(), password);
+      await authService.login(email.trim(), password);
+      window.location.href = "http://localhost:3000/index.html";
+    } catch (error) {
+      setErrorMsg(error.message || "No se pudo registrar");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -27,7 +38,9 @@ export default function Register() {
           <input type="email" id="email" name="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
           <label htmlFor="password">Contraseña:</label>
           <input type="password" id="password" name="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
-          <button type="submit">Registrarse</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Registrando..." : "Registrarse"}
+          </button>
         </form>
         <p>¿Ya tienes cuenta? <Link to="/login">Inicia sesión aquí</Link></p>
         {errorMsg && <div id="error-msg">{errorMsg}</div>}
