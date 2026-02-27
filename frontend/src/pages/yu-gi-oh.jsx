@@ -25,7 +25,7 @@ const API_URL = "http://localhost:3000/api";
 export default function Yugioh() {
   const navigate = useNavigate();
   const [seleccionadas, setSeleccionadas] = useState([]);
-  const [agregando, setAgregando]         = useState(false);
+  const [agregando, setAgregando] = useState(false);
 
   const toggleSeleccion = (nombre) => {
     setSeleccionadas((prev) =>
@@ -42,20 +42,15 @@ export default function Yugioh() {
     }
 
     setAgregando(true);
-
     try {
       const res = await fetch(`${API_URL}/cards`);
       const todasLasCartas = await res.json();
-
       for (const nombre of seleccionadas) {
         const carta = todasLasCartas.find((c) => c.name === nombre);
         if (carta) {
           await fetch(`${API_URL}/cart/add`, {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
             body: JSON.stringify({ cardId: carta._id, quantity: 1 }),
           });
         }
@@ -63,7 +58,6 @@ export default function Yugioh() {
     } catch (e) {
       console.error("Error agregando al carrito:", e);
     }
-
     setAgregando(false);
     navigate("/cart");
   };
@@ -90,12 +84,9 @@ export default function Yugioh() {
           ))}
         </div>
       </main>
-
-      {seleccionadas.length > 0 && (
-        <button id="btn-agregar-carrito" onClick={irAlCarrito} disabled={agregando}>
-          {agregando ? "Agregando..." : `Agregar ${seleccionadas.length} carta(s) al carrito 🛒`}
-        </button>
-      )}
+      
+      {/* ✅ BOTÓN FLOTANTE SIEMPRE VISIBLE */}
+      <Link to="/cart" id="btn-ir-carrito">🛒</Link>
     </div>
   );
 }

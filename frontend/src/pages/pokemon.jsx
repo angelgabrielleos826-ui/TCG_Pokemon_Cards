@@ -25,7 +25,7 @@ const API_URL = "http://localhost:3000/api";
 export default function Pokemon() {
   const navigate = useNavigate();
   const [seleccionadas, setSeleccionadas] = useState([]);
-  const [agregando, setAgregando]         = useState(false);
+  const [agregando, setAgregando] = useState(false);
 
   const toggleSeleccion = (nombre) => {
     setSeleccionadas((prev) =>
@@ -42,21 +42,15 @@ export default function Pokemon() {
     }
 
     setAgregando(true);
-
-    // Buscar IDs de las cartas seleccionadas en el backend y agregarlas
     try {
       const res = await fetch(`${API_URL}/cards`);
       const todasLasCartas = await res.json();
-
       for (const nombre of seleccionadas) {
         const carta = todasLasCartas.find((c) => c.name === nombre);
         if (carta) {
           await fetch(`${API_URL}/cart/add`, {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
             body: JSON.stringify({ cardId: carta._id, quantity: 1 }),
           });
         }
@@ -64,7 +58,6 @@ export default function Pokemon() {
     } catch (e) {
       console.error("Error agregando al carrito:", e);
     }
-
     setAgregando(false);
     navigate("/cart");
   };
@@ -91,12 +84,9 @@ export default function Pokemon() {
           ))}
         </div>
       </main>
-
-      {seleccionadas.length > 0 && (
-        <button id="btn-agregar-carrito" onClick={irAlCarrito} disabled={agregando}>
-          {agregando ? "Agregando..." : `Agregar ${seleccionadas.length} carta(s) al carrito 🛒`}
-        </button>
-      )}
+      
+      {/* ✅ BOTÓN FLOTANTE SIEMPRE VISIBLE */}
+      <Link to="/cart" id="btn-ir-carrito">🛒</Link>
     </div>
   );
 }

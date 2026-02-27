@@ -20,8 +20,12 @@ export default function Login() {
 
     setLoading(true);
     try {
-      await authService.login(email.trim(), password);
-      window.location.href = "http://localhost:3000/index.html";
+      const data = await authService.login(email.trim(), password);
+      // ✅ AGREGADO: guardar token en localStorage
+      if (data?.jwt_token) {
+        localStorage.setItem("jwt_token", data.jwt_token);
+      }
+      window.location.href = "/home";
     } catch (error) {
       setErrorMsg(error.message || "No se pudo iniciar sesion");
     } finally {
@@ -31,16 +35,29 @@ export default function Login() {
 
   return (
     <div className="login-page">
-        
       <div className="login-container">
         <h1>Iniciar Sesión</h1>
 
         <form id="login-form" onSubmit={handleSubmit}>
           <label htmlFor="email">Email:</label>
-          <input type="email" id="email" name="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
           <label htmlFor="password">Contraseña:</label>
-          <input type="password" id="password" name="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
           <button type="submit" disabled={loading}>
             {loading ? "Ingresando..." : "Iniciar Sesión"}
