@@ -4,9 +4,16 @@
     box-sizing: border-box;
 }
 
-body {
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.eventos-page {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
                 url('../resources/fondo6.png');
     background-size: cover;
     background-position: center;
@@ -14,15 +21,16 @@ body {
     min-height: 100vh;
 }
 
-header {
+.eventos-page header {
     background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
     color: white;
     padding: 40px 20px;
     text-align: center;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
 }
 
-header h1 {
+.eventos-page header h1 {
     font-size: 2.5em;
     margin-bottom: 10px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -106,7 +114,7 @@ header h1 {
 }
 
 .evento-info h2 {
-    color: #2a5298;
+    color: #2a5298; 
     font-size: 1.8em;
     margin-bottom: 10px;
 }
@@ -121,11 +129,16 @@ header h1 {
 .detalles p {
     margin: 8px 0;
     font-size: 0.95em;
+    color: #333; 
+}
+
+.detalles p strong {
+    color: #222; 
 }
 
 .descripcion {
     line-height: 1.6;
-    color: #555;
+    color: #555; 
 }
 
 .btn-registro {
@@ -157,51 +170,13 @@ header h1 {
     transform: none;
 }
 
-footer {
-    background: #1e3c72;
-    color: white;
-    text-align: center;
-    padding: 30px 20px;
-    margin-top: 40px;
-}
-
-footer p {
-    margin: 5px 0;
-}
-
-/* MODAL EVENTOS (MEETS) */
-
-.modal-crear-evento .modal-contenido {
-    animation: scaleIn 0.2s ease;
-    max-width: 600px;
-}
-
-.modal-crear-evento textarea {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-}
-
-.modal-crear-evento .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-.modal-crear-evento .full {
-    grid-column: span 2;
-}
-
-/* MODAL (REGISTRO) */
-.modal {
-    display: none;
+/* MODAL */
+.modal-overlay {
     position: fixed;
     z-index: 1000;
     inset: 0;
     background: rgba(0,0,0,0.6);
-
-    /* Centrado del modal*/
+    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -212,7 +187,6 @@ footer p {
     max-width: 500px;
     max-height: 90vh;
     overflow-y: auto;
-    margin: 5% auto;
     padding: 25px;
     border-radius: 15px;
     position: relative;
@@ -224,25 +198,30 @@ footer p {
     right: 15px;
     font-size: 25px;
     cursor: pointer;
+    background: none;
+    border: none;
 }
 
-.modal h2 {
+.modal-contenido h2 {
     text-align: center;
     margin-bottom: 20px;
+    color: #333; 
 }
 
-.modal label {
+.modal-contenido label {
     font-weight: bold;
     display: block;
     margin-top: 10px;
+    color: #333; 
 }
 
-.modal input {
+.modal-contenido input {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
     border-radius: 8px;
     border: 1px solid #ccc;
+    color: #333; 
 }
 
 .fecha {
@@ -250,25 +229,36 @@ footer p {
     gap: 10px;
 }
 
-/* RECIBO DESCARGABLE */
-
 .recibo p {
     margin: 8px 0;
     font-size: 15px;
+    color: #333; 
 }
 
 .recibo h2 {
     text-align: center;
     margin-bottom: 15px;
+    color: #333; 
 }
 
-/* Boton para volver (Home) */
+.btn-confirmar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 15px;
+    width: 100%;
+}
 
-.volver-li{
+/* BOTÓN VOLVER */
+.volver-li {
     list-style: none;
 }
 
-.btn-volver{
+.btn-volver {
     display: flex;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -279,45 +269,42 @@ footer p {
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
     justify-content: flex-start;
-    align-items: flex-start;    
+    align-items: center;
     height: 10vh;
-    position: absolute; left: 15px;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-/* Boton para agregar eventos (MEETS) */
+.btn-volver:hover {
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
 
-.fab {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    z-index: 9999;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: orange;
+/* FOOTER */
+.eventos-page footer {
+    background: #1e3c72;
     color: white;
-    font-size: 30px;
-    border: none;
-    cursor: pointer;
-    display: none;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 40px;
+}
+
+.eventos-page footer p {
+    margin: 5px 0;
 }
 
 @media (max-width: 768px) {
     .evento {
         flex-direction: column;
     }
-    
+
     .evento-imagen {
         min-height: 250px;
     }
-    
-    header h1 {
-        font-size: 1.8em;
-    }
 
-    .modal input,
-    .modal button {
-        font-size: 1rem;
+    .eventos-page header h1 {
+        font-size: 1.8em;
     }
 }
 
@@ -327,57 +314,10 @@ footer p {
         padding: 20px;
         border-radius: 10px;
     }
-
-    .modal h2 {
-        font-size: 1.3rem;
-    }
 }
 
 @media (max-width: 480px) {
     .fecha {
         flex-direction: column;
     }
-}
-
-@media print {
-
-    /* Ocultar todo */
-    body * {
-        visibility: hidden;
-    }
-
-    /* Mostrar SOLO el recibo */
-    #modalRecibo, 
-    #modalRecibo * {
-        visibility: visible;
-    }
-
-    /* Eliminar overlay y centrar */
-    #modalRecibo {
-        position: absolute;
-        inset: 0;
-        background: none !important;
-        display: block;
-        height: auto;
-    }
-
-    /* Ajustar tamaño del recibo */
-    .modal-contenido.recibo {
-        margin: 0 auto;
-        box-shadow: none;
-        width: 100%;
-        max-width: 600px;
-        page-break-inside: avoid;
-    }
-
-    /* Quitar botones innecesarios */
-    .btn-confirmar,
-    .cerrar-recibo {
-        display: none;
-    }
-}
-
-@page {
-    size: A4;
-    margin: 20mm;
 }

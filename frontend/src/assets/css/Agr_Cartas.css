@@ -4,26 +4,29 @@
     box-sizing: border-box;
 }
 
-/* ===== BODY ===== */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+html, body, #root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
 
+.agr-cartas-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background:
         linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
         url('../resources/pokemonfondo.jpg');
-
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-/* ===== TARJETA ===== */
 .form-card {
     background: #f4f4f4;
     width: 600px;
@@ -34,7 +37,6 @@ body {
     gap: 20px;
 }
 
-/* ===== FORMULARIO ===== */
 .form-section {
     flex: 1;
 }
@@ -70,7 +72,6 @@ body {
     border-color: #2a5298;
 }
 
-/* ===== BOTÓN ===== */
 .btn-crear {
     margin-top: 8px;
     width: 100%;
@@ -89,7 +90,6 @@ body {
     background: #1e3c72;
 }
 
-/* ===== PREVIEW ===== */
 .preview-section {
     width: 180px;
     text-align: center;
@@ -105,18 +105,6 @@ body {
     width: 100%;
     border-radius: 8px;
     box-shadow: 0 5px 12px rgba(0,0,0,0.3);
-}
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 700px) {
-    .form-card {
-        flex-direction: column;
-        width: 90%;
-    }
-
-    .preview-section {
-        width: 100%;
-    }
 }
 
 .volver-menu {
@@ -138,4 +126,15 @@ body {
 
 .btn-volver:hover {
     background-color: #555;
+}
+
+@media (max-width: 700px) {
+    .form-card {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .preview-section {
+        width: 100%;
+    }
 }
