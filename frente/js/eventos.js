@@ -156,8 +156,6 @@ async function cargarEventos() {
     eventos.forEach(evento => {
         renderEvento(evento);
     });
-
-    console.log(data);
 }
 
 function formatearHora(hora) {

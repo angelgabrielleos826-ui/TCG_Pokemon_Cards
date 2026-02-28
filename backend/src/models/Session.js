@@ -14,14 +14,12 @@ const sesionSchema = new mongoose.Schema(
             default: null
         },
         expiresAt: {
-             type: Date,
+            type: Date,
             required: true,
-            index: true
         },
     },
         {
             timestramps: true
-
         }
 );
 

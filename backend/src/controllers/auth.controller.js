@@ -48,7 +48,7 @@ async function login (req, res)  {
     }
 
     //Validar que exista el email registrado
-     const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) return res.status(401).json({ error : "Usuario no valido"});
 
     //Validar que la contraseña sea correcta
@@ -77,14 +77,10 @@ async function login (req, res)  {
     );
 
     //return res.status(201).json({jwt_token: token});
-   res
-   .cookie("access_token", token, cookieOptions())
-   .cookie("session_id", String(session._id), cookieOptions())
-   .json({ ok: true, jwt_token: token });// agregue eso para que regrese el token en el body
     res
     .cookie("access_token", token, cookieOptions())
     .cookie("session_id", String(session._id), cookieOptions())
-    .json({ ok:true });
+    .json({ ok: true, jwt_token: token });
 };
 
 async function logout(req, res, next) {
