@@ -9,6 +9,8 @@ import Eventos from "../pages/eventos";
 import AgrCartas from "../pages/agrCartas";
 import Cart from "../pages/cart";
 import CommunityMarketplace from "../pages/communityMarketplace";
+import Meets from "../pages/meets";
+
 
 const AppRoutes = () => {
   return (
@@ -24,6 +26,7 @@ const AppRoutes = () => {
       <Route path="/agregar-carta" element={<AgrCartas />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/community" element={<CommunityMarketplace />} />
+      <Route path="/meets" element={<Meets />} />
     </Routes>
   );
 };
