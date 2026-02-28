@@ -253,3 +253,24 @@ button:disabled {
     height: 220px;
   }
 }
+
+.btn-volver {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 25px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    transition: 0.3s;
+    z-index: 9999;
+    width: fit-content;
+}
+
+.btn-volver:hover {
+    opacity: 0.9;
+}

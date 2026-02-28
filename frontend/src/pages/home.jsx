@@ -1,11 +1,16 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/Authcontext";
 import "../assets/css/home.css";
+import Footer from "../components/Footer";
+
 
 import charizard from "../assets/resources/charizard.jpg";
 import digimon from "../assets/resources/digimon.jpg";
 import yugioh from "../assets/resources/yu-gi-oh.jpg";
 
 export default function Home() {
+  const { user } = useAuth();
+
   return (
     <div className="home-page">
       <header>
@@ -16,6 +21,7 @@ export default function Home() {
             <li><Link to="/digimon">Digimon</Link></li>
             <li><Link to="/yugioh">Yu-Gi-Oh</Link></li>
             <li><Link to="/eventos">Torneos</Link></li>
+            <li><Link to="/community">Comunidad</Link></li>
           </ul>
         </nav>
       </header>
@@ -75,20 +81,18 @@ export default function Home() {
 
         <div className="menu-secundario">
           <h3>Enlaces Rápidos</h3>
-          <Link to="/eventos">🏆 Próximos Torneos</Link>
-          <Link to="/pokemon">🃏 Nuevas Cartas</Link>
-          <a href="#">📰 Noticias TCG</a>
-          <Link to="/eventos">📅 Próximos Eventos</Link>
-          <a href="#">👥 Comunidad</a>
+          <Link to="/eventos">Próximos Torneos</Link>
+          <Link to="/pokemon">Nuevas Cartas</Link>
+          <a href="#">Noticias TCG</a>
+          <Link to="/eventos">Próximos Eventos</Link>
+          <Link to="/community">Comunidad</Link>
         </div>
       </div>
 
-      <footer>
-        <p>📧 Contacto: eventos@tcgmonterrey.com | 📱 WhatsApp: +52 81 1023 6329</p>
-        <p>© 2026 TCG Monterrey - Todos los derechos reservados</p>
-      </footer>
-
-      <Link to="/agregar-carta" className="btn-agregar-carta">+</Link>
+      <Footer />
+      {user?.role === "admin" && (
+        <Link to="/agregar-carta" className="btn-agregar-carta">+</Link>
+      )}
     </div>
   );
 }

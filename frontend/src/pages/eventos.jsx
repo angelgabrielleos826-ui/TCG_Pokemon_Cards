@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../assets/css/EstiloEventos.css";
+import Footer from "../components/Footer";
+
 
 const eventosData = [
   {
@@ -209,7 +211,6 @@ export default function Eventos() {
         </div>
       )}
 
-      {/* MODAL RECIBO */}
       {modalRecibo && (
         <div className="modal-overlay" onClick={(e) => e.target === e.currentTarget && setModalRecibo(null)}>
           <div className="modal-contenido recibo">
@@ -229,10 +230,7 @@ export default function Eventos() {
         </div>
       )}
 
-      <footer>
-        <p>📧 Contacto: eventos@tcgmonterrey.com | 📱 WhatsApp: +52 81 1023 6329</p>
-        <p>© 2026 TCG Monterrey - Todos los derechos reservados</p>
-      </footer>
+      <Footer/>
     </div>
   );
 }

@@ -27,7 +27,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Acceso a directorio (frontend)
-app.use(express.static(path.resolve(__dirname, "../../"), {
+app.use(express.static(path.resolve(__dirname, "../frontend/src/pages"), {
   index: false
 }));
 

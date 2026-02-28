@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/EstiloYu-gi-oh.css";
+import BtnCarrito from "../components/BtnCarrito";
+
 
 const cartas = [
   { nombre: "Blue-Eyes White Dragon",           img: "https://images.ygoprodeck.com/images/cards/89631139.jpg" },
@@ -83,10 +85,8 @@ export default function Yugioh() {
             </div>
           ))}
         </div>
-      </main>
-      
-      {/* ✅ BOTÓN FLOTANTE SIEMPRE VISIBLE */}
-      <Link to="/cart" id="btn-ir-carrito">🛒</Link>
+      </main>   
+    <BtnCarrito />
     </div>
   );
 }

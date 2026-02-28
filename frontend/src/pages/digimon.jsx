@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/EstiloDigimon.css";
+import BtnCarrito from "../components/BtnCarrito";
+
 
 const cartas = [
   { nombre: "Yokomon",          img: "https://images.digimoncard.io/images/cards/BT1-001.jpg" },
@@ -85,8 +87,7 @@ export default function Digimon() {
         </div>
       </main>
 
-      {/* ✅ BOTÓN FLOTANTE SIEMPRE VISIBLE */}
-      <Link to="/cart" id="btn-ir-carrito">🛒</Link>
+    <BtnCarrito />
     </div>
   );
 }

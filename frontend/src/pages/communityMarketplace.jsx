@@ -216,6 +216,7 @@ export default function CommunityMarketplace() {
               "https://media.tenor.com/llSAvv3PxdAAAAAM/pacman-namco.gif";
           }}
         />
+       <Link to="/home" className="btn-volver">Volver</Link>
       </header>
 
       <section className="form-section">
