@@ -138,26 +138,26 @@ html, body, #root {
     transform: translateY(-52%);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
 }
-/* ===== BOTÓN FLOTANTE IR AL CARRITO ===== */
+
 #btn-ir-carrito {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 60px;
-    height: 60px;
-    background-color: #ff4081;
+    background: linear-gradient(135deg, #ff4081, #ff1744);
     color: white;
-    font-size: 28px;
+    font-size: 16px;
+    font-weight: bold;
     text-align: center;
-    line-height: 60px;
-    border-radius: 50%;
+    padding: 15px 30px;
+    border-radius: 50px;
     text-decoration: none;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     transition: transform 0.2s, box-shadow 0.2s;
     z-index: 1000;
+    white-space: nowrap;
 }
 
 #btn-ir-carrito:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 10px rgba(0,0,0,0.4);
+    transform: scale(1.05);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
 }

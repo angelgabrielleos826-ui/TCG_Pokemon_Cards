@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/EstiloPokemon.css";
+import BtnCarrito from "../components/BtnCarrito";
 
 const cartas = [
   { nombre: "Oddish",           img: "https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_1.png" },
@@ -84,9 +85,7 @@ export default function Pokemon() {
           ))}
         </div>
       </main>
-      
-      {/* ✅ BOTÓN FLOTANTE SIEMPRE VISIBLE */}
-      <Link to="/cart" id="btn-ir-carrito">🛒</Link>
+            <BtnCarrito />
     </div>
   );
 }

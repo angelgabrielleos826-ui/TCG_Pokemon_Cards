@@ -38,19 +38,24 @@ export default function AgrCartas() {
 
       const data = await res.json();
       console.log("Carta guardada:", data);
-      alert("Carta creada en la base de datos ✅");
+      alert("Carta creada en la base de datos ");
 
       setForm({ name: "", image: "", price: "", stock: "" });
       setPreview("");
 
     } catch (err) {
       console.error("Error al crear la carta:", err);
-      alert("Hubo un error al crear la carta ❌");
+      alert("Hubo un error al crear la carta ");
     }
   };
 
   return (
     <div className="agr-cartas-page">
+
+      <div className="volver-menu">
+        <Link to="/home" className="btn-volver">← Volver al Menú</Link>
+      </div>
+
       <div className="form-card">
 
         <div className="form-section">
@@ -92,10 +97,6 @@ export default function AgrCartas() {
           {preview && <img src={preview} alt="Vista previa" />}
         </div>
 
-      </div>
-
-      <div className="volver-menu">
-        <Link to="/home" className="btn-volver">← Volver al Menú</Link>
       </div>
     </div>
   );
