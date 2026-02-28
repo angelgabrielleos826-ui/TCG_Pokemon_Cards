@@ -1,5 +1,5 @@
-async function request(path, option = {}) {
-    const res = await fetch(path, {
+async function request(path, options = {}) {
+    const res = await fetch(`http://localhost:3000${path}`, {
         ...options,
         headers : {
             "Content-Type": "application/json",
