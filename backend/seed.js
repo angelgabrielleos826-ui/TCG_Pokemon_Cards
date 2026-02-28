@@ -144,6 +144,11 @@ for (let i = 0; i < cards.length; i++) {
     email: "Andre@gmail.com",
     passwordHash: await bcrypt.hash("123456", 3),
     role: "admin"
+  },
+  {
+    email: "Prueba@gmail.com",
+    passwordHash: await bcrypt.hash("654321", 3),
+    role: "user"
   }
 
 ];

@@ -48,7 +48,7 @@ async function login (req, res)  {
     }
 
     //Validar que exista el email registrado
-     const user = await User.findOne({ email });
+    const user = await User.findOne({ email });
     if (!user) return res.status(401).json({ error : "Usuario no valido"});
 
     //Validar que la contraseña sea correcta
