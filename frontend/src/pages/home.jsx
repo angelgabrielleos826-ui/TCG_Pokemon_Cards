@@ -84,7 +84,7 @@ export default function Home() {
           <Link to="/eventos">Próximos Torneos</Link>
           <Link to="/pokemon">Nuevas Cartas</Link>
           <a href="#">Noticias TCG</a>
-          <Link to="/eventos">Próximos Eventos</Link>
+          <Link to="/meets">Próximos Eventos</Link>
           <Link to="/community">Comunidad</Link>
         </div>
       </div>
