@@ -22,7 +22,7 @@ const cartas = [
   { nombre: "Hell's Gate",      img: "https://images.digimoncard.io/images/cards/BT4-112.jpg" },
 ];
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://tcg-pokemon-cards.onrender.com";
 
 export default function Digimon() {
   const navigate = useNavigate();
