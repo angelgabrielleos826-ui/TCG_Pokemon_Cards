@@ -151,10 +151,10 @@ export default function Eventos() {
             <div className="evento-info">
               <h2>{evento.nombre}</h2>
               <div className="detalles">
-                <p><strong>📅 Fecha:</strong> {evento.fecha}</p>
-                <p><strong>🕐 Hora:</strong> {evento.hora}</p>
-                <p><strong>📍 Lugar:</strong> {evento.lugar}</p>
-                <p><strong>💰 Inscripción:</strong> {evento.inscripcion === 0 ? "Gratis" : `$${evento.inscripcion} MXN`}</p>
+                <p><strong>Fecha:</strong> {evento.fecha}</p>
+                <p><strong>Hora:</strong> {evento.hora}</p>
+                <p><strong>Lugar:</strong> {evento.lugar}</p>
+                <p><strong>Inscripción:</strong> {evento.inscripcion === 0 ? "Gratis" : `$${evento.inscripcion} MXN`}</p>
               </div>
               <p className="descripcion">{evento.descripcion}</p>
               {evento.activo ? (
