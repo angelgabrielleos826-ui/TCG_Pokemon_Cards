@@ -1,5 +1,5 @@
 async function request(path, options = {}) {
-    const res = await fetch(`http://localhost:3000${path}`, {
+      const res = await fetch(`https://tcg-pokemon-cards.onrender.com${path}`, {
         ...options,
         headers : {
             "Content-Type": "application/json",

@@ -21,7 +21,7 @@ const cartas = [
   { nombre: "Darumaka",         img: "https://dz3we2x72f7ol.cloudfront.net/expansions/phantasmal-flames/es-mx/8BXG_LA_15.png" },
 ];
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://tcg-pokemon-cards.onrender.com";
 
 export default function Pokemon() {
   const navigate = useNavigate();
