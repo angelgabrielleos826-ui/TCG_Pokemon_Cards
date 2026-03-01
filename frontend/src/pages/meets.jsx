@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../assets/css/EstiloEventos.css";
+import Footer from "../components/Footer";
 
 const API_URL = "http://localhost:3000/api";
 
@@ -76,32 +77,38 @@ export default function Meets() {
   });
 
   // Verificar si es admin
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch(`${API_URL}/auth/me`, { credentials: "include" });
-        if (!res.ok) return;
-        const user = await res.json();
-        if (user.role === "admin") setIsAdmin(true);
-      } catch {
-        console.log("No autenticado");
-      }
-    })();
-    cargarEventos();
-  }, []);
+useEffect(() => {
+  const token = localStorage.getItem("jwt_token");
 
-  const cargarEventos = async () => {
+  (async () => {
     try {
-      const res = await fetch(`${API_URL}/events`);
-      const data = await res.json();
-      if (data.items && data.items.length > 0) {
-        setEventosBackend(data.items);
-      }
-    } catch (err) {
-      console.error("Error cargando eventos:", err);
+      const res = await fetch(`${API_URL}/auth/me`, {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      if (!res.ok) return;
+      const user = await res.json();
+      if (user.role === "admin") setIsAdmin(true);
+    } catch {
+      console.log("No autenticado");
     }
-  };
+  })();
+  cargarEventos();
+}, []);
 
+const cargarEventos = async () => {
+  try {
+    const token = localStorage.getItem("jwt_token");
+    const res = await fetch(`${API_URL}/events`, {
+      headers: { "Authorization": `Bearer ${token}` }
+    });
+    const data = await res.json();
+    if (data.items && data.items.length > 0) {
+      setEventosBackend(data.items);
+    }
+  } catch (err) {
+    console.error("Error cargando eventos:", err);
+  }
+};
   const formatearHora = (hora) => {
     if (!hora) return "";
     const [h, m] = hora.split(":");
@@ -161,7 +168,7 @@ export default function Meets() {
 
       const data = await res.json();
       if (res.ok) {
-        alert("✅ Registro completado");
+        alert(" Registro completado");
         cerrarModal();
       } else {
         alert(data.error || "Error al registrar");
@@ -172,29 +179,31 @@ export default function Meets() {
     }
   };
 
-  const crearEvento = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch(`${API_URL}/events`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ ...formCrear, activo: true })
-      });
+const crearEvento = async (e) => {
+  e.preventDefault();
+  try {
+    const token = localStorage.getItem("jwt_token");
+    const res = await fetch(`${API_URL}/events`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({ ...formCrear, activo: true })
+    });
 
-      if (res.ok) {
-        alert("Evento creado correctamente");
-        setModalCrear(false);
-        cargarEventos();
-      } else {
-        const text = await res.text();
-        alert("Error: " + text);
-      }
-    } catch (err) {
-      console.error(err);
+    if (res.ok) {
+      alert("Evento creado correctamente");
+      setModalCrear(false);
+      cargarEventos(); 
+    } else {
+      const text = await res.text();
+      alert("Error: " + text);
     }
-  };
-
+  } catch (err) {
+    console.error(err);
+  }
+};
   const todosLosEventos = [...meetsData, ...eventosBackend.map(e => ({
     ...e,
     fecha: new Date(e.fecha).toLocaleDateString("es-MX"),
@@ -335,10 +344,7 @@ export default function Meets() {
         <button className="fab" onClick={() => setModalCrear(true)}>+</button>
       )}
 
-      <footer>
-        <p>📧 Contacto: comunidad@tcgmonterrey.com | 📱 WhatsApp: +52 81 1023 6329</p>
-        <p>© 2026 TCG Monterrey - Comunidad Oficial</p>
-      </footer>
+      <Footer/>
     </div>
   );
 }
