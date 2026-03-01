@@ -22,7 +22,7 @@ const cartas = [
   { nombre: "Number 33: Chronomaly Machu Mech", img: "https://images.ygoprodeck.com/images/cards/39139935.jpg" },
 ];
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://tcg-pokemon-cards.onrender.com";
 
 export default function Yugioh() {
   const navigate = useNavigate();
