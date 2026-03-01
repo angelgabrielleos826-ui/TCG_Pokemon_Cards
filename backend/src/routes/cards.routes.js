@@ -7,16 +7,3 @@ router.get("/", getCards);
 router.post("/createCard", createCard);
 
 module.exports = router;
-
-    // Ver todas las cartas
-    router.get(
-        "/",
-        async(req, res) => {
-            const cards = await Card.find();
-            res.json(cards);
-        }
-    );
-
-    router.post("/createCard", createCard);
-
-    module.exports = router;
