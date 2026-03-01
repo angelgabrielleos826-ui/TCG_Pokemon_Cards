@@ -33,7 +33,7 @@ const eventosData = [
   {
     id: 3,
     nombre: "Yu-Gi-Oh! Duel Tournament",
-    fecha: "Sábado 1 de Marzo, 2026",
+    fecha: "Sábado 2 de Marzo, 2026",
     hora: "12:00 PM - 8:00 PM",
     lugar: "Fundidora Park Gaming Zone, Monterrey",
     inscripcion: 180,
