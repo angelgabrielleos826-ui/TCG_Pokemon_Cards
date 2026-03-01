@@ -383,7 +383,7 @@ export default function Cart() {
 
         {/* ── CARRITO (Script.js → mostrarCarrito) ── */}
         <aside className="carrito">
-          <h2>🛒 Carrito</h2>
+          <h2>Carrito</h2>
 
           {carrito.length === 0 ? (
             <p style={{ color: "#94a3b8", textAlign: "center", padding: "20px 0" }}>
@@ -441,7 +441,7 @@ export default function Cart() {
             Vaciar carrito
           </button>
           <button className="btn-pagar" onClick={abrirModal}>
-            💳 Pagar
+            Pagar
           </button>
         </aside>
 
@@ -458,7 +458,7 @@ export default function Cart() {
 
             {!compraExitosa ? (
               <>
-                <h2>🛍️ Finalizar Compra</h2>
+                <h2>Finalizar Compra</h2>
 
                 <div className="resumen-pago">
                   <span>Total a pagar:</span>
@@ -467,7 +467,7 @@ export default function Cart() {
 
                 {/* Envío */}
                 <div className="form-seccion">
-                  <h3>📦 Datos de Envío</h3>
+                  <h3>Datos de Envío</h3>
                   <div className="form-grupo">
                     <Campo label="Nombre completo" id="fullName" placeholder="Ej. Juan Pérez García"    value={form.fullName} onChange={handleChange} />
                     <Campo label="Teléfono"         id="phone"    placeholder="Ej. 8112345678" maxLength={10} value={form.phone}    onChange={handleChange} />
@@ -481,7 +481,7 @@ export default function Cart() {
 
                 {/* Tarjeta */}
                 <div className="form-seccion">
-                  <h3>💳 Datos de Tarjeta</h3>
+                  <h3>Datos de Tarjeta</h3>
                   <div className="form-grupo">
                     <div className="campo">
                       <label htmlFor="cardType">Tipo de tarjeta</label>
@@ -514,13 +514,12 @@ export default function Cart() {
             ) : (
               /* ÉXITO + TICKET (checkout.js → mostrarTicket) */
               <div className="mensaje-exito">
-                <div className="icono">✅</div>
                 <h3>¡Compra realizada!</h3>
                 <p>Tu pedido ha sido registrado correctamente.<br />¡Gracias por tu compra!</p>
 
                 {ticket && (
                   <div className="ticket-container">
-                    <h2>🧾 Ticket de compra</h2>
+                    <h2>Ticket de compra</h2>
                     <p><strong>Orden:</strong> {ticket.numeroOrden}</p>
                     <p><strong>Fecha:</strong> {new Date(ticket.fecha || ticket.createdAt || Date.now()).toLocaleString("es-MX")}</p>
                     <p><strong>Método de pago:</strong> {ticket.metodoPago || "Tarjeta"}</p>
