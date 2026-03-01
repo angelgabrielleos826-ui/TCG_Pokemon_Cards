@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../assets/css/Agr_cartas.css";
+import "../assets/css/Agr_Cartas.css";
 
 const API_URL = "https://tcg-pokemon-cards.onrender.com";
 
