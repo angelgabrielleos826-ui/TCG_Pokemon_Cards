@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/css/EstiloCart.css";
 
-const API_URL = "https://tcg-pokemon-cards.onrender.com";
+const API_URL = "http://localhost:3000/api";
 
 // ─── cartManager.js ───────────────────────────────────────────────────────────
 

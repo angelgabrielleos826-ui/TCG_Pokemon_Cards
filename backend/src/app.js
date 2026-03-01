@@ -19,14 +19,13 @@ const communityRoutes = require("./routes/community.routes");
 const app = express();
 
 app.use(cors({
-    origin: true,
+    origin: "http://localhost:5173",
     credentials: true
 }));
 
 app.use(express.json());
 app.use(cookieParser());
 
-// Acceso a directorio (frontend)
 app.use(express.static(path.resolve(__dirname, "../frontend/src/pages"), {
   index: false
 }));
@@ -35,7 +34,6 @@ app.get("/", (req, res) => {
   res.redirect("http://localhost:5173/login");
 });
 
-// Rutas
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/products", productRoutes);
@@ -49,7 +47,6 @@ app.use("/api/ticket", ticketRoutes);
 app.use("/api/tipo-cambio", tipoCambioRoutes);
 app.use("/api/community", communityRoutes);
 
-// Error Handler
 app.use(errorHandler);
 
 app.get("/health", (req, res) => {

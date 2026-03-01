@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 async function auth(req, res, next) {
     const token = req.cookies?.access_token || 
-                  req.headers.authorization?.replace("Bearer ", ""); //utilice IA en la linea 7
+                  req.headers.authorization?.replace("Bearer ", "");
     const sessionId = req.cookies?.session_id;
 
     if(!token){
@@ -20,7 +20,6 @@ async function auth(req, res, next) {
         return next(new Error("Token expirado o invalido"));
     }
 
-    // Session validation solo si hay sessionId     Aqui solo hice un pequeño cambio con IA por un error en la linea 25 y26
     if(sessionId) {
         const session = await Session.findById(sessionId);
         if(!session || session.revokedAt || session.expiresAt <= new Date()){
