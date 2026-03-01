@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../assets/css/EstiloEventos.css";
 import Footer from "../components/Footer";
 
-const API_URL = "https://tcg-pokemon-cards.onrender.com";
+const API_URL = "http://localhost:3000/api";
 
 const meetsData = [
   {

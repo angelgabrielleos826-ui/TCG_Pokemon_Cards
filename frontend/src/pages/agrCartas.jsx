@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../assets/css/Agr_Cartas.css";
+import "../assets/css/Agr_cartas.css";
 
-const API_URL = "https://tcg-pokemon-cards.onrender.com";
+const API_URL = "http://localhost:3000/api";
 
 export default function AgrCartas() {
   const [form, setForm] = useState({
